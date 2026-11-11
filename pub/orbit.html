@@ -1,0 +1,178 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}</style></head><body><title>Orbit Labs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: a starfield that speeds up as you scroll; a headline that zooms through the screen; three pinned features that orbit in; a live dashboard; early-access form */
+:root{
+  --space:#07090D; --space-2:#0F141B; --mint:#9BFF9B; --blue:#4D7CFF; --white:#F2F5F8; --mute:#8A94A3; --line:#1E2632;
+  --display:'Unbounded', ui-sans-serif, system-ui, sans-serif;
+  --body:'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--space);color:var(--white);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;text-wrap:balance;line-height:1.02;letter-spacing:-.03em}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(clamp(22px,5vw,64px),env(safe-area-inset-left,0px));padding-right:max(clamp(22px,5vw,64px),env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--space)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header,footer{position:relative;z-index:1}
+.k{font:500 12px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--mint)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--mint);color:var(--space);text-decoration:none;font:600 15px var(--body);padding:14px 22px;border-radius:12px;border:0;cursor:pointer;transition:box-shadow .2s,transform .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(155,255,155,.45)}
+.ghost{background:transparent;color:var(--white);border:1px solid var(--line)}
+
+.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;backdrop-filter:blur(10px);background:rgba(7,9,13,.6);border-bottom:1px solid rgba(30,38,50,.6)}
+.nav-in{display:flex;align-items:center;gap:18px;padding-block:14px}
+.logo{font:800 18px var(--display);color:var(--white);text-decoration:none;white-space:nowrap}
+.logo span{color:var(--mint)}
+.nav nav{margin-left:auto;display:flex;gap:22px;align-items:center}
+.nav nav a{color:var(--mute);text-decoration:none;font-size:14px}
+.nav nav .btn{color:var(--space);padding:9px 16px;font-size:14px}
+@media (max-width:700px){.nav nav .nl{display:none}}
+
+.hero{min-height:100vh;display:flex;align-items:center}
+.hero-in{padding-block:140px 80px;display:flex;flex-direction:column;gap:28px;align-items:flex-start}
+.badge{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(15,20,27,.7);border-radius:999px;padding:6px 14px 6px 8px;font-size:13px;color:var(--mute)}
+.badge b{background:var(--mint);color:var(--space);border-radius:999px;padding:2px 8px;font-size:11px;letter-spacing:.06em}
+.hero h1{font-size:clamp(44px,8.2vw,120px);max-width:11ch}
+.hero h1 .gr{background:linear-gradient(90deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:46ch;color:var(--mute);font-size:19px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* zoom statement */
+.zoom{position:relative;height:220vh}
+.z-stage{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
+.z-txt{font:800 clamp(34px,7vw,96px)/1.02 var(--display);letter-spacing:-.03em;text-align:center;max-width:14ch;will-change:transform,opacity}
+.z-txt em{font-style:normal;color:var(--mint)}
+
+/* pinned features */
+.feat{position:relative;height:330vh}
+.f-stage{position:sticky;top:0;height:100vh;display:flex;align-items:center}
+.f-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center;width:100%}
+.f-list{display:flex;flex-direction:column;gap:14px}
+.f-item{border:1px solid var(--line);border-radius:18px;padding:22px 24px;background:rgba(15,20,27,.75);opacity:.35;transition:opacity .4s,border-color .4s,transform .4s}
+.f-item.on{opacity:1;border-color:var(--mint);transform:translateX(8px)}
+.f-item h3{font-size:22px;margin-bottom:6px}
+.f-item p{color:var(--mute);font-size:15px}
+.orb{position:relative;aspect-ratio:1;max-width:100%;width:100%}
+.orb svg{width:100%;height:100%;display:block}
+.ring{fill:none;stroke:var(--line);stroke-width:1}
+.core{transition:all .6s}
+.sat{transition:transform 1s cubic-bezier(.3,.7,.2,1)}
+@media (max-width:860px){.feat{height:auto}.f-stage{position:static;height:auto;padding-block:80px}.f-in{grid-template-columns:1fr}.f-item{opacity:1}.orb{max-width:340px;margin:0 auto}}
+
+/* dashboard */
+.dash{padding-block:120px}
+.dash h2{font-size:clamp(34px,5vw,64px);max-width:16ch;margin-bottom:40px}
+.panel{border:1px solid var(--line);border-radius:22px;background:rgba(15,20,27,.85);padding:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tile span{font-size:13px;color:var(--mute)}
+.tile b{font:600 32px var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tile i{font-style:normal;font-size:13px;color:var(--mint)}
+.chart{grid-column:1/-1;border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.chart svg{width:100%;height:160px;display:block}
+@media (max-width:760px){.panel{grid-template-columns:1fr}}
+
+.cta{padding-block:120px}
+.cta-box{border:1px solid var(--line);border-radius:28px;padding:clamp(28px,6vw,70px);background:radial-gradient(120% 140% at 100% 0%,rgba(77,124,255,.25),rgba(15,20,27,.9) 55%);display:flex;flex-direction:column;gap:20px}
+.cta h2{font-size:clamp(36px,6vw,80px);max-width:12ch}
+.cta form{display:flex;gap:10px;flex-wrap:wrap;max-width:560px}
+.cta input{flex:1 1 240px;min-width:0;font:400 16px var(--body);color:var(--white);background:var(--space);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.ok{color:var(--mint)}
+footer{color:var(--mute);font-size:13px;border-top:1px solid var(--line)}
+footer .wrap{padding-block:24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+<header class="nav"><div class="wrap nav-in">
+  <a class="logo" href="#top">orbit<span>/</span>labs</a>
+  <nav><a class="nl" href="#features">Product</a><a class="nl" href="#dash">Live demo</a><a class="btn" href="#access">Early access</a></nav>
+</div></header>
+
+<main>
+<section class="hero" id="top"><div class="wrap hero-in">
+  <span class="badge"><b>NEW</b>Orbit 2.0 is rolling out this month</span>
+  <h1>Ship faster. <span class="gr">Think bigger.</span></h1>
+  <p>Orbit connects your data, your team and your AI tools in one place, so decisions take minutes instead of meetings.</p>
+  <div class="row"><a class="btn" href="#access">Get early access</a><a class="btn ghost" href="#features">See how it works ↓</a></div>
+</div></section>
+
+<section class="zoom"><div class="z-stage"><div class="z-txt" id="zt">Your data is already <em>talking.</em> Most teams just can't hear it.</div></div></section>
+
+<section class="feat" id="features"><div class="f-stage"><div class="wrap f-in">
+  <div class="f-list">
+    <span class="k">How Orbit works</span>
+    <div class="f-item on"><h3>01 · Connect</h3><p>Plug in your CRM, spreadsheets and payments in minutes. No engineers needed.</p></div>
+    <div class="f-item"><h3>02 · Ask</h3><p>Type a question in plain English and get an answer with the chart that proves it.</p></div>
+    <div class="f-item"><h3>03 · Act</h3><p>Turn every answer into an alert, a task or a weekly report your team actually reads.</p></div>
+  </div>
+  <div class="orb" aria-hidden="true">
+    <svg viewBox="0 0 400 400">
+      <defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#9BFF9B"/><stop offset="60%" stop-color="#4D7CFF"/><stop offset="100%" stop-color="#07090D"/></radialGradient></defs>
+      <circle class="ring" cx="200" cy="200" r="90"/><circle class="ring" cx="200" cy="200" r="140"/><circle class="ring" cx="200" cy="200" r="185"/>
+      <circle class="core" id="core" cx="200" cy="200" r="54" fill="url(#g)"/>
+      <g class="sat" id="sat1" style="transform-origin:200px 200px"><circle cx="290" cy="200" r="12" fill="#9BFF9B"/></g>
+      <g class="sat" id="sat2" style="transform-origin:200px 200px"><circle cx="200" cy="60" r="9" fill="#4D7CFF"/></g>
+      <g class="sat" id="sat3" style="transform-origin:200px 200px"><circle cx="15" cy="200" r="7" fill="#F2F5F8"/></g>
+    </svg>
+  </div>
+</div></div></section>
+
+<section class="dash wrap" id="dash">
+  <span class="k">Live demo</span>
+  <h2 style="margin-top:14px">This is what your Monday morning could look like.</h2>
+  <div class="panel">
+    <div class="tile"><span>Revenue this week</span><b id="v1">$48,210</b><i>▲ 12% vs last week</i></div>
+    <div class="tile"><span>Active customers</span><b id="v2">1,284</b><i>▲ 38 new today</i></div>
+    <div class="tile"><span>Questions answered</span><b id="v3">326</b><i>by your team this week</i></div>
+    <div class="chart"><svg viewBox="0 0 600 160" preserveAspectRatio="none" aria-label="Sample revenue trend"><defs><linearGradient id="a" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9BFF9B" stop-opacity=".35"/><stop offset="1" stop-color="#9BFF9B" stop-opacity="0"/></linearGradient></defs><path id="area" fill="url(#a)"/><path id="lineP" fill="none" stroke="#9BFF9B" stroke-width="2.5"/></svg></div>
+  </div>
+  <p style="color:var(--mute);font-size:13px;margin-top:12px">Sample data for illustration.</p>
+</section>
+
+<section class="cta wrap" id="access"><div class="cta-box">
+  <span class="k">Early access</span>
+  <h2>Be one of the first 500 teams.</h2>
+  <p style="color:var(--mute);max-width:44ch">Free for 60 days, then a simple monthly plan. We'll send your invite within a week.</p>
+  <form id="f" novalidate><label for="fe" style="position:absolute;left:-9999px">Work email</label><input id="fe" type="email" placeholder="you@company.com" autocomplete="email"><button class="btn" type="submit">Request invite</button></form>
+  <p class="ok" id="ok" hidden></p>
+</div></section>
+</main>
+<footer><div class="wrap"><span>Orbit Labs</span><span>Design by a.estrategista</span></div></footer>
+
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* stars */
+const c=document.getElementById('stars'),x=c.getContext('2d');let W,H,stars=[],speed=.4,target=.4,lastY=scrollY;
+function size(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.min(380,Math.round(innerWidth*innerHeight/3500))},()=>({x:(Math.random()-.5)*W,y:(Math.random()-.5)*H,z:Math.random()*W}))}
+function draw(){x.fillStyle='rgba(7,9,13,.55)';x.fillRect(0,0,W,H);speed+=(target-speed)*.08;target+=(0.4-target)*.03;
+ for(const s of stars){s.z-=speed*devicePixelRatio*2;if(s.z<1){s.z=W;s.x=(Math.random()-.5)*W;s.y=(Math.random()-.5)*H}
+  const k=W*.5/s.z,px=s.x*k+W/2,py=s.y*k+H/2,r=Math.max(.4,(1-s.z/W)*2.2*devicePixelRatio);
+  x.fillStyle=s.z<W*.3?'#9BFF9B':'#F2F5F8';x.globalAlpha=Math.min(1,1-s.z/W+.15);x.beginPath();x.arc(px,py,r,0,7);x.fill()}
+ x.globalAlpha=1;if(!reduce)requestAnimationFrame(draw)}
+size();addEventListener('resize',size);draw();
+/* scroll effects */
+const zt=document.getElementById('zt'),zs=document.querySelector('.zoom'),fs=document.querySelector('.feat'),items=[...document.querySelectorAll('.f-item')];
+const sats=['sat1','sat2','sat3'].map(i=>document.getElementById(i)),core=document.getElementById('core');
+function frac(el){const r=el.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)))}
+function tick(){const dy=Math.abs(scrollY-lastY);lastY=scrollY;target=Math.min(14,.4+dy*.25);
+ const z=frac(zs);if(!reduce){zt.style.transform=`scale(${.6+z*1.1})`;zt.style.opacity=z<.75?Math.min(1,z*3):Math.max(0,1-(z-.75)*4)}
+ const f=frac(fs),i=Math.min(2,Math.floor(f*3));items.forEach((it,k)=>it.classList.toggle('on',k===i));
+ sats.forEach((s,k)=>s.style.transform=`rotate(${f*360*(k+1)*.6}deg)`);core.setAttribute('r',54+i*10)}
+addEventListener('scroll',()=>requestAnimationFrame(tick),{passive:true});tick();
+/* chart */
+let pts=Array.from({length:30},(_,i)=>60+Math.sin(i/3)*18+i*1.6+Math.random()*10);
+function chart(){const max=Math.max(...pts)+10,min=Math.min(...pts)-10;const P=pts.map((v,i)=>[i*(600/(pts.length-1)),150-(v-min)/(max-min)*140]);
+ const d='M'+P.map(p=>p.join(',')).join(' L');document.getElementById('lineP').setAttribute('d',d);document.getElementById('area').setAttribute('d',d+' L600,160 L0,160 Z')}
+chart();
+if(!reduce)setInterval(()=>{pts.shift();pts.push(pts[pts.length-1]+(Math.random()-.4)*8);chart();
+ const v1=document.getElementById('v1'),n=parseInt(v1.textContent.replace(/\D/g,''))+Math.round(Math.random()*90);v1.textContent='$'+n.toLocaleString('en-US');
+ const v3=document.getElementById('v3');v3.textContent=parseInt(v3.textContent)+(Math.random()<.5?1:0)},1600);
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();const v=document.getElementById('fe').value.trim(),ok=document.getElementById('ok');ok.hidden=false;ok.textContent=/.+@.+\..+/.test(v)?`You're on the list. We'll send the invite to ${v}.`:'Enter a valid work email to join the list.'});
+</script>
+</body></html>

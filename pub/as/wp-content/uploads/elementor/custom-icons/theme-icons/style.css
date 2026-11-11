@@ -1,0 +1,123 @@
+@font-face {
+  font-family: 'theme-icons';
+  src:  url('fonts/theme-icons.eot?47ct0w');
+  src:  url('fonts/theme-icons.eot?47ct0w#iefix') format('embedded-opentype'),
+    url('fonts/theme-icons.ttf?47ct0w') format('truetype'),
+    url('fonts/theme-icons.woff?47ct0w') format('woff'),
+    url('fonts/theme-icons.svg?47ct0w#theme-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="vamtam-theme-"], [class*=" vamtam-theme-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'theme-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.vamtam-theme-flag:before {
+  content: "\e91b";
+}
+.vamtam-theme-heart:before {
+  content: "\e91d";
+}
+.vamtam-theme-pay:before {
+  content: "\e91e";
+}
+.vamtam-theme-rocket:before {
+  content: "\e91f";
+}
+.vamtam-theme-layers:before {
+  content: "\e914";
+}
+.vamtam-theme-mail:before {
+  content: "\e915";
+}
+.vamtam-theme-pie:before {
+  content: "\e916";
+}
+.vamtam-theme-pin:before {
+  content: "\e917";
+}
+.vamtam-theme-star:before {
+  content: "\e918";
+}
+.vamtam-theme-trust:before {
+  content: "\e919";
+}
+.vamtam-theme-stats:before {
+  content: "\e900";
+}
+.vamtam-theme-sign-star:before {
+  content: "\e901";
+}
+.vamtam-theme-phone:before {
+  content: "\e905";
+}
+.vamtam-theme-layer:before {
+  content: "\e908";
+}
+.vamtam-theme-graph:before {
+  content: "\e909";
+}
+.vamtam-theme-fusion:before {
+  content: "\e90a";
+}
+.vamtam-theme-finance:before {
+  content: "\e90b";
+}
+.vamtam-theme-circles:before {
+  content: "\e90d";
+}
+.vamtam-theme-building:before {
+  content: "\e90e";
+}
+.vamtam-theme-bubble-finance:before {
+  content: "\e90f";
+}
+.vamtam-theme-ai:before {
+  content: "\e913";
+}
+.vamtam-theme-quote:before {
+  content: "\e903";
+}
+.vamtam-theme-check:before {
+  content: "\e91c";
+}
+.vamtam-theme-arrow-up:before {
+  content: "\e910";
+}
+.vamtam-theme-arrow-link-down:before {
+  content: "\e91a";
+}
+.vamtam-theme-arrow-link-up:before {
+  content: "\e911";
+}
+.vamtam-theme-arrow-dawn:before {
+  content: "\e912";
+}
+.vamtam-theme-search:before {
+  content: "\e902";
+}
+.vamtam-theme-close:before {
+  content: "\e90c";
+}
+.vamtam-theme-nav:before {
+  content: "\e906";
+}
+.vamtam-theme-minus:before {
+  content: "\e907";
+}
+.vamtam-theme-plus:before {
+  content: "\e904";
+}
