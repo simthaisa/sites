@@ -425,7 +425,7 @@ footer{padding-block:28px;font-size:13px;color:var(--ink-2);border-top:1px solid
     <div class="dark">
       <div style="display:flex;flex-direction:column;gap:18px">
         <h2 data-i="priceH">One clear price</h2>
-        <div class="big"><span class="pval">$600</span><small class="pcur">USD</small></div><div class="curs" role="group" aria-label="Currency"><button data-cur="USD">USD</button><button data-cur="EUR">EUR</button></div>
+        <div class="big"><span class="pval">$600</span><small class="pcur">USD</small></div>
         <p class="sub" data-i="priceP">No hourly billing, no surprise invoices. You know exactly what you get before we start.</p>
         <a class="cta cta-mint wa-link" href="https://wa.me/5541987815744" target="_blank" rel="noopener" style="align-self:flex-start"><span data-i="ctaPrice">I want my website</span></a>
       </div>
@@ -501,7 +501,7 @@ const T={"es": {"i8": "Hosting y dominio incluidos durante el primer año", "a2"
 const EN_EXTRA={"tagHart": "Law office", "dHart": "A statement that inks in as you read, practice areas with a pinned index and a case timeline.", "tagNorth": "Renovations", "dNorth": "A blueprint that draws itself and turns into the finished house, plus a plan-to-room slider.", "tagOrbit": "Tech startup", "dOrbit": "A starfield that speeds up as you scroll, an orbiting feature tour and a live dashboard.", "liveNote": "This preview can't show other websites inside it. On the published page it opens right here.", "openLive": "Open the live site \u2197"};
 const MSG={"en": "Hi Thaisa! I saw your websites and I'd like to talk about one for my business.", "es": "¡Hola Thaisa! Vi tus sitios web y me gustaría hablar sobre uno para mi negocio.", "pt-BR": "Oi, Thaisa! Vi seus sites e quero conversar sobre um para o meu negócio.", "pt-PT": "Olá, Thaisa! Vi os seus sites e gostava de falar sobre um para o meu negócio."};
 const EN={};document.querySelectorAll('[data-i]').forEach(e=>{if(!(e.dataset.i in EN))EN[e.dataset.i]=e.textContent});Object.assign(EN,EN_EXTRA);T.en=EN;
-function setLang(l){curLang=l;
+function setLang(l){curLang=l;try{setCur(l)}catch(_){};
   document.documentElement.lang=l;
   document.querySelectorAll('[data-i]').forEach(e=>{const v=T[l][e.dataset.i];if(v)e.textContent=v;});
   document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l));
@@ -551,9 +551,6 @@ hero.addEventListener('pointerleave',()=>fl.forEach(el=>el.style.translate='0 0'
 let start='en';
 try{const n=(navigator.language||'').toLowerCase();start=localStorage.getItem('ae-lang')||(n.startsWith('pt')?'pt-PT':n.startsWith('es')?'es':'en');if(start==='pt-BR')start='pt-PT';if(!T[start]&&start!=='en')start='en'}catch(e){}
 setLang(start);
-(function(){const P={USD:["$600","USD"],EUR:["€550","EUR"]};let c="USD";
-try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";if(/^(Europe|Atlantic\/(Madeira|Azores|Canary))/.test(tz)&&!/London|Belfast|Guernsey|Jersey|Isle_of_Man|Zurich|Oslo|Stockholm|Copenhagen|Warsaw|Prague|Budapest|Bucharest|Sofia|Istanbul|Moscow|Kiev|Kyiv|Minsk|Belgrade|Sarajevo|Skopje|Tirane|Chisinau/.test(tz))c="EUR"}catch(_){}
-try{const s=localStorage.getItem("ae-cur");if(s==="USD"||s==="EUR")c=s}catch(_){}
-function set(x){c=x;document.querySelectorAll(".pval").forEach(e=>e.textContent=P[c][0]);document.querySelectorAll(".pcur").forEach(e=>e.textContent=P[c][1]);document.querySelectorAll("[data-cur]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.cur===c)))}
-document.addEventListener("click",e=>{const b=e.target.closest("[data-cur]");if(b){set(b.dataset.cur);try{localStorage.setItem("ae-cur",c)}catch(_){}}});set(c)})();
+const PRICE={USD:["$600","USD"],EUR:["€550","EUR"]};
+function setCur(l){const c=l==="en"?"USD":"EUR";document.querySelectorAll(".pval").forEach(e=>e.textContent=PRICE[c][0]);document.querySelectorAll(".pcur").forEach(e=>e.textContent=PRICE[c][1])}
 </script>
