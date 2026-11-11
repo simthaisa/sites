@@ -299,6 +299,7 @@ footer{padding-block:28px;font-size:13px;color:var(--ink-2);border-top:1px solid
 
 .wa{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;width:60px;height:60px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 12px 28px rgba(0,0,0,.25)}
 .wa:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.curs{display:inline-flex;align-self:flex-start;justify-self:start;width:max-content;gap:4px;margin-top:10px;background:rgba(255,255,255,.08);border-radius:999px;padding:3px}.curs button{border:0;background:transparent;color:inherit;opacity:.7;font:700 12px var(--font);padding:5px 12px;border-radius:999px;cursor:pointer}.curs button[aria-pressed="true"]{background:var(--mint);color:var(--ink);opacity:1}
 </style>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT" hidden>
@@ -336,7 +337,7 @@ footer{padding-block:28px;font-size:13px;color:var(--ink-2);border-top:1px solid
         <span class="contact" data-i="ctaSub">Everything by message, no meetings. Voice notes welcome.</span>
       </div>
       <div class="price-row rise" style="--d:.65s">
-        <div><b>$600</b><span data-i="pr1">fixed price</span></div>
+        <div><b class="pval">$600</b><span data-i="pr1">fixed price</span></div>
         <div><b data-i="pr2b">20 days</b><span data-i="pr2">from kickoff to launch</span></div>
         <div><b data-i="pr3b">EN · ES</b><span data-i="pr3">we talk in your language</span></div>
       </div>
@@ -424,7 +425,7 @@ footer{padding-block:28px;font-size:13px;color:var(--ink-2);border-top:1px solid
     <div class="dark">
       <div style="display:flex;flex-direction:column;gap:18px">
         <h2 data-i="priceH">One clear price</h2>
-        <div class="big">$600<small>USD</small></div>
+        <div class="big"><span class="pval">$600</span><small class="pcur">USD</small></div><div class="curs" role="group" aria-label="Currency"><button data-cur="USD">USD</button><button data-cur="EUR">EUR</button></div>
         <p class="sub" data-i="priceP">No hourly billing, no surprise invoices. You know exactly what you get before we start.</p>
         <a class="cta cta-mint wa-link" href="https://wa.me/5541987815744" target="_blank" rel="noopener" style="align-self:flex-start"><span data-i="ctaPrice">I want my website</span></a>
       </div>
@@ -550,4 +551,9 @@ hero.addEventListener('pointerleave',()=>fl.forEach(el=>el.style.translate='0 0'
 let start='en';
 try{const n=(navigator.language||'').toLowerCase();start=localStorage.getItem('ae-lang')||(n.startsWith('pt')?'pt-PT':n.startsWith('es')?'es':'en');if(start==='pt-BR')start='pt-PT';if(!T[start]&&start!=='en')start='en'}catch(e){}
 setLang(start);
+(function(){const P={USD:["$600","USD"],EUR:["€550","EUR"]};let c="USD";
+try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";if(/^(Europe|Atlantic\/(Madeira|Azores|Canary))/.test(tz)&&!/London|Belfast|Guernsey|Jersey|Isle_of_Man|Zurich|Oslo|Stockholm|Copenhagen|Warsaw|Prague|Budapest|Bucharest|Sofia|Istanbul|Moscow|Kiev|Kyiv|Minsk|Belgrade|Sarajevo|Skopje|Tirane|Chisinau/.test(tz))c="EUR"}catch(_){}
+try{const s=localStorage.getItem("ae-cur");if(s==="USD"||s==="EUR")c=s}catch(_){}
+function set(x){c=x;document.querySelectorAll(".pval").forEach(e=>e.textContent=P[c][0]);document.querySelectorAll(".pcur").forEach(e=>e.textContent=P[c][1]);document.querySelectorAll("[data-cur]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.cur===c)))}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-cur]");if(b){set(b.dataset.cur);try{localStorage.setItem("ae-cur",c)}catch(_){}}});set(c)})();
 </script>
