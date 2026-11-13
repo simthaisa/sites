@@ -116,27 +116,66 @@ h1 em::after{content:"";position:absolute;left:-.04em;right:-.02em;bottom:.12em;
 }
 @media(min-width:900px) and (max-width:1180px){.copy{padding-right:40px}.mini{width:170px;left:-60px}.rate{left:-50px}}
 
+.mhd,.mloc,.sub .mb,.mpic{display:none}
+.tgroup{display:contents}
+
 /* mobile hero */
 @media(max-width:899px){
-  :root{--hd:68px}
-  .hd{gap:16px}.hd nav{display:none}
-  .logo svg{width:34px;height:34px}.logo b{font-size:18px}
-  .hd .book{height:40px;padding:0 16px;font-size:14px}
-  .visual{order:-1;height:min(47svh,420px);margin-inline:12px}
-  .photo{inset:0;border-radius:150px 150px 26px 26px}
-  @keyframes open{from{clip-path:inset(100% 0 0 0 round 150px 150px 26px 26px)}to{clip-path:inset(0 0 0 0 round 150px 150px 26px 26px)}}
-  .nametag{right:20px;bottom:18px;text-align:right}
-  .nametag b{font-size:18px}.nametag span{font-size:10px}
-  .rate{left:-4px;bottom:-24px;padding:10px 16px 10px 10px;border-radius:18px;gap:12px}
-  .rate .g{width:40px;height:40px;font-size:17px;border-radius:12px}
-  .rate span{font-size:12px}
-  .mini,.seal,.nametag{display:none}
-  .copy{gap:16px;padding:44px 20px 26px}
-  h1{font-size:clamp(40px,11.4vw,50px)}
-  .sub{font-size:15.5px}
-  .btn{height:54px;font-size:15.5px;padding-left:22px}
-  .btn .ar{width:38px;height:38px}
-  .meta,.kicker.top{display:none}
+  :root{--hd:0px}
+  body>header{display:none}
+  .sub .dk{display:none}.sub .mb{display:inline}
+  .hero{min-height:100svh;align-content:start}
+  .visual{order:-1;height:max(400px,calc(100svh - 206px));margin:0}
+  .photo{inset:0;border-radius:0 0 34px 34px}
+  @keyframes open{from{clip-path:inset(0 0 100% 0 round 0 0 34px 34px)}to{clip-path:inset(0 0 0 0 round 0 0 34px 34px)}}
+  .photo img{object-position:50% 12%}
+  .photo::before{content:"";position:absolute;inset:0 0 auto 0;height:26%;z-index:1;background:linear-gradient(to bottom,rgba(38,28,23,.55),rgba(38,28,23,0))}
+  .photo::after{height:52%;background:linear-gradient(to top,rgba(38,28,23,.92) 0%,rgba(38,28,23,.6) 38%,rgba(38,28,23,0) 100%)}
+  /* cabeçalho sobre a foto */
+  .mhd{display:flex;position:absolute;z-index:5;top:0;left:0;right:0;align-items:center;justify-content:space-between;padding:max(16px,env(safe-area-inset-top)) 18px 0 20px;color:#fff}
+  .mlogo{display:flex;align-items:center;gap:10px}
+  .mlogo svg{width:30px;height:30px;flex:none}
+  .mlogo b{display:block;font-weight:400;font-size:17px;letter-spacing:.02em;line-height:1}
+  .mlogo small{display:block;font-size:9px;letter-spacing:.34em;text-transform:uppercase;opacity:.85;margin-top:4px}
+  .mbook{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:rgba(246,241,235,.16);border:1px solid rgba(246,241,235,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;text-decoration:none;font-size:14px;font-weight:500}
+  .mbook i{width:6px;height:6px;border-radius:50%;background:#6FD08C;animation:ping 2.4s ease-out infinite}
+  /* nota e nome sobre a foto */
+  .rate{right:16px;left:auto;top:auto;bottom:calc(140px + 3vw);padding:7px 12px 7px 7px;border-radius:999px;gap:9px;background:rgba(246,241,235,.18);border:1px solid rgba(246,241,235,.4);box-shadow:none;color:#fff}
+  .rate .g{width:30px;height:30px;font-size:13px;border-radius:50%;background:var(--ivory)}
+  .rate b{font-size:10.5px;letter-spacing:1.5px;color:#E7C27A}
+  .rate span{font-size:11px;color:rgba(255,255,255,.9);line-height:1.25}
+  .nametag{left:20px;right:auto;top:auto;bottom:calc(140px + 3vw);text-align:left}
+  .nametag b{font-size:15px}.nametag span{font-size:8.5px;letter-spacing:.3em}
+  .seal,.mini{display:none}
+  /* título + foto pequena, lado a lado */
+  .tgroup{display:flex;align-items:stretch;gap:16px;margin-bottom:24px}
+  .tgroup h1{flex:1 1 auto;min-width:0}
+  .mpic{display:block;position:relative;flex:none;width:clamp(84px,23vw,104px);margin:2px 2px 0 0;border:3px solid #fff;border-radius:16px;overflow:hidden;transform:rotate(3deg);box-shadow:0 18px 32px -12px rgba(10,6,4,.7);opacity:0;animation:popT .9s var(--ease) 1.25s forwards}
+  .mpic img{width:100%;height:100%;object-fit:cover;object-position:35% 28%}
+  .mpic figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 7px 6px;font-size:9px;line-height:1.2;font-weight:500;letter-spacing:.02em;color:#fff;background:linear-gradient(to top,rgba(38,28,23,.9),rgba(38,28,23,0))}
+  @keyframes popT{from{opacity:0;transform:translateY(16px) rotate(3deg) scale(.92)}to{opacity:1;transform:rotate(3deg)}}
+  /* texto */
+  .copy{gap:14px;padding:0 20px 16px;margin-top:calc(-2.16 * min(11.4vw,52px) - 18px);z-index:4}
+  h1{font-size:min(11.4vw,52px);color:#fff;line-height:.96;margin-bottom:0}
+  h1 em{color:var(--blush)}
+  h1 em::after{background:rgba(232,198,186,.26)}
+  .mloc{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-size:12.5px;letter-spacing:.08em;color:var(--ink-2)}
+  .mloc svg{width:14px;height:14px;color:var(--mocha-d)}
+  .sub{font-size:15.5px;line-height:1.5}
+  .acts{flex-direction:column;align-items:stretch;gap:0}
+  .btn{height:58px;justify-content:space-between;padding:0 8px 0 24px;font-size:16px;width:100%}
+  .btn .ar{width:42px;height:42px}
+  .lnk,.meta,.kicker.top{display:none}
+}
+@media(max-width:899px) and (max-height:700px){
+  .visual{height:max(370px,calc(100svh - 190px))}
+  .rate,.nametag{bottom:128px}
+  .copy{margin-top:calc(-2.16 * 10.6vw - 16px)}
+  h1{font-size:10.6vw}
+  .tgroup{margin-bottom:20px}
+  .mpic{width:80px}
+  .sub{font-size:14.5px}
+  .btn{height:54px}
 }
 
 /* ---------- marquee ---------- */
@@ -214,6 +253,7 @@ footer{padding-block:36px 46px;font-size:13.5px;color:var(--ink-2);display:flex;
   *,*::before,*::after{animation:none!important;transition:none!important}
   h1 .ln>span{transform:none}.fade,.float{opacity:1;transform:none}
   h1 em::after{transform:none}
+  .mpic{opacity:1;transform:rotate(3deg)}
   .js .rv{opacity:1;transform:none}.js .rv-img{clip-path:none}
   html{scroll-behavior:auto}
 }
@@ -236,16 +276,20 @@ footer{padding-block:36px 46px;font-size:13.5px;color:var(--ink-2);display:flex;
 <section class="hero" aria-label="Apresentação">
   <div class="copy">
     <span class="kicker top fade" style="--d:.1s">Estética avançada e tradicional</span>
+    <div class="tgroup">
     <h1>
       <span class="ln"><span style="--d:.2s">Sinta-se bem</span></span>
       <span class="ln"><span style="--d:.34s">na sua <em>pele.</em></span></span>
     </h1>
-    <p class="sub fade" style="--d:.65s">Rosto, corpo, laser e massagens com a <b>Carla Rebelo</b> e uma equipa de profissionais certificadas, no 1.º andar do Bragashopping.</p>
+    <figure class="mpic" aria-hidden="true"><img src="img/tratamento.jpg" alt=""><figcaption>Avaliação personalizada</figcaption></figure>
+    </div>
+    <p class="sub fade" style="--d:.65s">Rosto, corpo, laser e massagens com a <b>Carla Rebelo</b><span class="dk"> e uma equipa de profissionais certificadas, no 1.º andar do Bragashopping</span><span class="mb">, no Bragashopping, em Braga</span>.</p>
     <div class="acts fade" style="--d:.8s">
       <a class="btn" href="https://wa.me/351926042305?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20uma%20marca%C3%A7%C3%A3o." target="_blank" rel="noopener">Marcar pelo WhatsApp
         <span class="ar"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg></span>
       </a>
       <a class="lnk" href="#">Ver tratamentos</a>
+      <span class="mloc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Bragashopping · Loja 305 · 1.º andar</span>
     </div>
     <div class="meta fade" style="--d:.95s">
       <div><b>4,9<small>★</small></b><span>no Google</span></div>
@@ -255,6 +299,10 @@ footer{padding-block:36px 46px;font-size:13.5px;color:var(--ink-2);display:flex;
   </div>
 
   <div class="visual">
+    <div class="mhd fade" style="--d:.5s">
+      <span class="mlogo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 9.5c3.2 3.4 4.2 7.4 0 13-4.2-5.6-3.2-9.6 0-13Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M20 22.5c-2.6-4.6-6.4-6-10-5.6.6 4.6 4.8 7 10 5.6Zm0 0c2.6-4.6 6.4-6 10-5.6-.6 4.6-4.8 7-10 5.6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 28h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span><b>Beau Beauty</b><small>Clinic · Braga</small></span></span>
+      <a class="mbook" href="https://wa.me/351926042305?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20uma%20marca%C3%A7%C3%A3o." target="_blank" rel="noopener"><i></i>Marcar</a>
+    </div>
     <div class="photo"><img src="img/carla.jpg" alt="Carla Rebelo, da Beau Beauty Clinic, de braços cruzados na clínica" fetchpriority="high"></div>
     <div class="nametag fade" style="--d:1.2s"><b>Carla Rebelo</b><span>Beau Beauty Clinic</span></div>
     <div class="float rate" style="--d:1.05s"><span class="g">4,9</span><span><b>★★★★★</b>45 avaliações no Google</span></div>
