@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roma Estética &amp; Spa · Ciudad de Panamá</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Allura&display=swap" rel="stylesheet">
+<style>
+:root{--crema:#F6F3E7;--crema2:#EEF0E0;--verde:#24502F;--lima:#7CA01A;--lima2:#A9C24A;--azul:#1250A7;--txt:#2D3A2E;--suave:#5F6B5C;--oro:#C9A962}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--txt);background:var(--crema);font-variant-numeric:lining-nums}
+a{color:inherit;text-decoration:none}
+.top{position:absolute;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:24px 5vw}
+.logo{display:flex;align-items:center;gap:12px;line-height:1}
+.logo b{font-size:30px;font-weight:800;letter-spacing:.04em;color:var(--verde)}
+.logo b i{display:inline-block;width:.78em;height:.78em;border:.13em solid var(--azul);border-radius:50%;margin:0 .02em;vertical-align:-.04em}
+.logo small{display:block;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--suave);margin-top:5px}
+.menu{display:flex;gap:32px;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--verde)}
+.btn{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--verde);color:var(--verde);border-radius:999px;padding:13px 26px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:.3s}
+.btn:hover{background:var(--verde);color:var(--crema)}
+.btn.lleno{background:var(--verde);color:#fff}
+.btn.lleno:hover{background:var(--lima);border-color:var(--lima)}
+.hero{position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:center;background:radial-gradient(120% 90% at 85% 40%,#EEF2DC 0%,var(--crema) 60%)}
+.hojas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hojas path{fill:none;stroke-linecap:round}
+.hojas .tallo{stroke:var(--lima);stroke-width:2;stroke-dasharray:1400;stroke-dashoffset:1400;animation:traza 2.6s .3s ease-out forwards}
+.hojas .hoja{fill:var(--lima2);opacity:0;animation:aparece 1s ease-out forwards}
+@keyframes traza{to{stroke-dashoffset:0}}
+@keyframes aparece{to{opacity:.55}}
+.txt{position:relative;z-index:3;padding:110px 5vw 0;max-width:54vw}
+.eti{font-family:Allura,cursive;font-size:40px;color:var(--lima);line-height:1;margin-bottom:14px}
+h1{font-size:clamp(44px,5.2vw,82px);font-weight:700;line-height:1.04;letter-spacing:-.03em;color:var(--verde)}
+h1 em{font-style:normal;color:var(--lima)}
+.sub{margin-top:24px;font-size:18px;line-height:1.7;max-width:31em;color:var(--suave);font-weight:300}
+.sub b{font-weight:600;color:var(--txt)}
+.acc{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;position:relative}
+.fotos{position:absolute;z-index:2;right:6vw;top:50%;transform:translateY(-46%);width:min(40vw,560px);height:min(74vh,640px)}
+.arco{position:absolute;overflow:hidden;border-radius:999px 999px 18px 18px;box-shadow:0 26px 50px rgba(36,80,47,.18);outline:1.5px solid var(--lima2);outline-offset:9px;background:center/cover no-repeat;animation:sube 1.2s ease-out both}
+.arco.rosa{right:0;top:0;width:58%;height:82%;background-image:url(img/rosa-retrato.jpg);background-position:center 12%}
+.arco.facial{left:0;bottom:0;width:44%;height:52%;background-image:url(img/facial.jpg);animation-delay:.25s}
+@keyframes sube{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.nombre{position:absolute;right:0;bottom:-6px;width:58%;text-align:center;z-index:3}
+.nombre span{font-family:Allura,cursive;font-size:34px;color:var(--verde);display:block;line-height:1}
+.nombre small{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--suave)}
+.nota{position:absolute;z-index:4;left:-8%;top:8%;background:#fff;border-radius:20px;padding:16px 20px;box-shadow:0 18px 40px rgba(36,80,47,.14);text-align:left}
+.nota b{font-size:34px;font-weight:700;color:var(--verde);line-height:1}
+.nota .est{color:var(--oro);font-size:15px;letter-spacing:.12em;margin-left:6px}
+.nota p{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--suave);margin-top:6px;white-space:nowrap}
+.sello{display:inline-flex;align-items:center;gap:10px;margin-top:30px;font-size:13px;color:var(--suave)}
+.sello i{width:8px;height:8px;border-radius:50%;background:var(--lima)}
+section.serv{padding:100px 5vw;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;background:#fff}
+section.serv h2{grid-column:1/-1;font-size:40px;color:var(--verde)}
+@media(max-width:820px){
+ .top{padding:18px 20px}.menu{display:none}.logo b{font-size:24px}.logo small{font-size:9px}
+ .top .btn{padding:9px 14px;font-size:10px}
+ .hero{flex-direction:column;align-items:stretch;min-height:100svh}
+ .fotos{order:1;position:relative;right:auto;top:auto;transform:none;width:auto;height:46svh;margin:92px 22px 0}
+ .arco.rosa{width:60%;height:88%}
+ .arco.facial{width:44%;height:56%;bottom:8%}
+ .arco{outline-offset:6px}
+ .nombre{bottom:-4px;width:60%}.nombre span{font-size:26px}
+ .nota{left:0;top:2%;padding:10px 14px;border-radius:14px}.nota b{font-size:24px}.nota p{font-size:9px}
+ .txt{order:2;max-width:none;padding:34px 22px 30px}
+ .hojas{display:none}
+ .eti{font-size:32px;margin-bottom:6px}
+ h1{font-size:38px}.sub{font-size:15px;margin-top:14px}.acc{margin-top:22px}
+ .sello{display:none}
+}
+</style>
+</head>
+<body data-fundo="claro">
+<main>
+<section class="hero">
+  <header class="top">
+    <a class="logo" href="#"><span><b>R<i></i>MA</b><small>Estética &amp; Spa</small></span></a>
+    <div class="menu"><a href="#">Tratamientos</a><a href="#">Rosa Cardozo</a><a href="#">Reseñas</a></div>
+    <a class="btn" href="#">Agendar</a>
+  </header>
+  <svg class="hojas" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path class="tallo" d="M -20 885 C 150 870, 300 850, 430 812"/>
+    <path class="hoja" style="animation-delay:1.2s" d="M 140 872 c 8 -36 46 -54 76 -48 c -12 30 -42 52 -76 48 z"/>
+    <path class="hoja" style="animation-delay:1.5s" d="M 300 852 c -26 -22 -28 -58 -8 -78 c 20 24 24 56 8 78 z"/>
+    <path class="hoja" style="animation-delay:1.8s" d="M 410 818 c 10 -34 48 -50 76 -42 c -12 30 -42 50 -76 42 z"/>
+    <path class="tallo" style="animation-delay:.8s" d="M 1460 70 C 1330 110, 1240 60, 1130 120"/>
+    <path class="hoja" style="animation-delay:2s" d="M 1300 92 c -10 -36 10 -66 38 -74 c 6 32 -10 62 -38 74 z"/>
+    <path class="hoja" style="animation-delay:2.3s" d="M 1200 96 c 6 -36 40 -56 70 -52 c -10 32 -40 54 -70 52 z"/>
+  </svg>
+  <div class="txt">
+    <div class="eti">Armonía a tu salud</div>
+    <h1>Tu piel y tu cuerpo, <em>en manos expertas.</em></h1>
+    <p class="sub">Limpieza facial profunda, masajes relajantes y reductores con <b>Rosa Cardozo</b>, <b>22 años de experiencia</b> en Ciudad de Panamá. En cabina o a domicilio.</p>
+    <div class="acc"><a class="btn lleno" href="#">Agendar por WhatsApp</a><a class="btn" href="#">Ver tratamientos</a></div>
+    <div class="sello"><i></i>Lunes a viernes · 10:00 a 17:00</div>
+  </div>
+  <div class="fotos">
+    <div class="arco rosa" role="img" aria-label="Rosa Cardozo"></div>
+    <div class="arco facial" role="img" aria-label="Limpieza facial en cabina"></div>
+    <div class="nombre"><span>Rosa Cardozo</span><small>Especialista en estética</small></div>
+    <div class="nota"><b>4,9</b><span class="est">★★★★★</span><p>34 reseñas en Google</p></div>
+  </div>
+</section>
+</main>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:2147483646;pointer-events:none;background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27300%27%20height%3D%27150%27%3E%3Ctext%20x%3D%27150%27%20y%3D%2782%27%20text-anchor%3D%27middle%27%20transform%3D%27rotate%28-22%20150%2075%29%27%20font-family%3D%27Poppins%2CArial%2Csans-serif%27%20font-size%3D%2713%27%20font-weight%3D%27600%27%20letter-spacing%3D%271.6%27%20fill%3D%27rgba%2843%2C38%2C34%2C.17%29%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.4%29%27%20stroke-width%3D%27.5%27%3EPR%C3%89-VISUALIZA%C3%87%C3%83O%20%C2%B7%20a.estrategista%3C/text%3E%3C/svg%3E&quot;);background-repeat:repeat"></div>
+<div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;font:600 11px/1 Poppins,system-ui,sans-serif;letter-spacing:.04em;color:#fff;background:rgba(17,17,17,.55);padding:7px 11px;border-radius:999px;pointer-events:none">Pré-visualização · a.estrategista</div>
+</body>
+</html>
