@@ -31,11 +31,11 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(48px,6
 h1 em{font-style:italic;color:var(--oliva)}
 .sub{margin-top:26px;font-size:18px;line-height:1.65;max-width:31em;color:var(--suave)}
 .acc{display:flex;gap:16px;flex-wrap:wrap;margin-top:38px}
-.lado{position:absolute;z-index:3;left:calc(100% - 100vh * .52 - 260px);bottom:9vh;display:flex;gap:14px;align-items:flex-end}
+.lado{position:absolute;z-index:3;left:calc(100vw - 100vh * .52 - 260px);bottom:0;display:flex;gap:14px;align-items:flex-end}
 .nota{background:var(--crema);padding:20px 24px;box-shadow:0 18px 40px rgba(60,40,30,.12)}
 .nota b{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:46px;line-height:1}
 .nota .est{color:var(--oro);letter-spacing:.2em;font-size:15px;margin-left:8px}
-.nota p{font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-top:6px;color:var(--suave)}
+.nota p{white-space:nowrap;font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-top:6px;color:var(--suave)}
 .cabina{width:clamp(170px,15vw,220px);aspect-ratio:.78;height:auto;background:url(img/cabina-ciudad.jpg) center/cover;border-radius:999px 999px 4px 4px;outline:1px solid var(--oro);outline-offset:6px;box-shadow:0 18px 40px rgba(60,40,30,.15)}
 .vista{display:none;position:absolute;z-index:3;right:1.6vw;top:120px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;writing-mode:vertical-rl;color:var(--suave)}
 section.serv{padding:110px 5vw;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;background:var(--crema)}
@@ -48,6 +48,7 @@ section.serv h2{grid-column:1/-1;font-family:'Cormorant Garamond',serif;font-wei
  .ella{position:relative;right:auto;align-self:flex-end;height:56svh;margin:86px -8px 0 0;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 75%,transparent),linear-gradient(90deg,transparent,#000 18%);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,transparent 0,#000 14%,#000 75%,transparent 100%),linear-gradient(90deg,transparent 0,#000 18%);mask-composite:intersect}
  .txt{max-width:none;padding:0 22px 28px;margin-top:-40px}
  .eti{display:none}
+ .txt{position:static}
  h1{font-size:44px}.sub{font-size:15.5px;margin-top:14px}.acc{margin-top:22px}
  .lado{left:22px;top:118px;bottom:auto;flex-direction:column;align-items:flex-start;gap:16px}
  .cabina{width:100%;height:230px;aspect-ratio:auto;outline-offset:5px}
@@ -92,10 +93,10 @@ section.serv h2{grid-column:1/-1;font-family:'Cormorant Garamond',serif;font-wei
     <h1>Tu piel,<br>cuidada <em>con calma</em><br>y con ciencia.</h1>
     <p class="sub">Tratamientos personalizados en cabinas privadas con vista a la ciudad, con productos de alta gama y un equipo que te escucha antes de empezar.</p>
     <div class="acc"><a class="btn lleno" href="#">Reservar por WhatsApp</a><a class="btn" href="#">Ver tratamientos</a></div>
-  </div>
-  <div class="lado">
+    <div class="lado">
     <div class="cabina" role="img" aria-label="Cabina con vista a la ciudad"></div>
     <div class="nota"><b>4,7</b><span class="est">★★★★★</span><p>150 reseñas en Google</p></div>
+  </div>
   </div>
 </section>
 </main>
