@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skin Esencia · Phoenix Esthetician</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--fondo:#DED4D9;--claro:#EEE8EB;--ciruela:#3B2A33;--suave:#6E5C66;--rosa:#A8746A;--oro:#B8956A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;color:var(--ciruela);background:var(--fondo);font-variant-numeric:lining-nums}
+a{color:inherit;text-decoration:none}
+.top{position:absolute;top:0;left:0;right:0;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:26px 5vw}
+.logo{font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:.01em;line-height:1}
+.logo small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--suave);margin-top:6px}
+.menu{display:flex;gap:34px;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--ciruela);border-radius:999px;padding:15px 28px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;transition:.3s}
+.btn:hover{background:var(--ciruela);color:var(--claro)}
+.btn.lleno{background:var(--ciruela);color:var(--claro)}
+.btn.lleno:hover{background:var(--rosa);border-color:var(--rosa)}
+.hero{position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(180deg,#E3DADF 0%,var(--fondo) 55%,#D3C7CD 100%)}
+.ella{position:absolute;z-index:1;right:0;bottom:0;height:100vh;width:auto;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);animation:sube 1.4s ease-out both}
+@keyframes sube{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.circulo{position:absolute;z-index:0;right:8vw;top:12vh;width:56vh;aspect-ratio:1;border-radius:50%;border:1px solid rgba(59,42,51,.18);animation:gira 60s linear infinite}
+.circulo::after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--oro)}
+@keyframes gira{to{transform:rotate(360deg)}}
+.txt{position:relative;z-index:3;padding:0 5vw;max-width:58vw;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:60px}
+.eti{font-size:12px;letter-spacing:.36em;text-transform:uppercase;color:var(--rosa);margin-bottom:24px;display:flex;align-items:center;gap:14px}
+.eti::before{content:"";width:44px;height:1px;background:var(--rosa)}
+h1{font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(50px,6.4vw,104px);line-height:.98;letter-spacing:-.02em;max-width:8.6em}
+h1 em{font-style:italic;color:var(--rosa)}
+h1 span{display:inline-block;opacity:0;transform:translateY(.35em);animation:pal .9s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes pal{to{opacity:1;transform:none}}
+.sub{margin-top:26px;font-size:18px;line-height:1.7;max-width:30em;color:var(--suave);font-weight:300;animation:ap 1s 1.3s both}
+.sub b{font-weight:500;color:var(--ciruela)}
+@keyframes ap{from{opacity:0}}
+.acc{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px;animation:ap 1s 1.6s both}
+.card{position:absolute;z-index:4;background:rgba(246,242,244,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);border-radius:20px;box-shadow:0 22px 50px rgba(59,42,51,.16);animation:flota 7s ease-in-out infinite,ap 1s ease-out both}
+@keyframes flota{50%{transform:translateY(-10px)}}
+.nota{left:calc(100% - 100vh * .75 + 20px);top:24vh;padding:18px 22px;animation-delay:0s,.7s}
+.nota b{font-family:'DM Serif Display',serif;font-weight:400;font-size:44px;line-height:1}
+.nota .est{color:var(--oro);letter-spacing:.14em;font-size:15px;margin-left:8px}
+.nota p{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--suave);margin-top:6px;white-space:nowrap}
+.antes{left:calc(100% - 100vh * .75 - 40px);bottom:9vh;padding:10px;width:230px;animation-delay:2s,1s}
+.antes .vp{position:relative;height:170px;border-radius:12px;overflow:hidden;touch-action:pan-y;cursor:grab}
+.antes .tira{display:flex;height:100%;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.antes .tira div{flex:0 0 100%;height:100%;background:center/cover no-repeat}
+.antes p{font-size:12px;line-height:1.35;margin:8px 6px 4px;color:var(--ciruela);min-height:32px}
+.antes p span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--rosa);margin-bottom:3px}
+.antes p em{font-style:normal}
+.antes .pts{display:flex;gap:5px;margin:8px 6px 0}.antes .pts i{width:6px;height:6px;border-radius:9px;background:#D6C9CF;transition:width .3s}.antes .pts i.on{width:16px;background:var(--rosa)}
+.virtual{right:4vw;bottom:15vh;display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;animation-delay:3.5s,1.3s}
+.virtual i{width:9px;height:9px;border-radius:50%;background:var(--rosa);box-shadow:0 0 0 5px rgba(168,116,106,.2)}
+.virtual span{font-size:13px;font-weight:500;white-space:nowrap}
+.firma{position:absolute;z-index:4;right:4vw;bottom:4vh;text-align:right;color:var(--ciruela)}
+.firma b{display:block;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:26px}
+.firma small{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--suave)}
+section.serv{padding:100px 5vw;background:var(--claro)}
+.resenas{position:relative;padding:120px 5vw 0;background:#2B1F25;color:#F3ECEF;overflow:hidden}
+.resenas .glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:deriva 14s ease-in-out infinite alternate}
+.resenas .g1{width:520px;height:520px;left:-120px;top:-80px;background:#8A5560}.resenas .g2{width:600px;height:600px;right:-160px;bottom:-120px;background:#6E4A5E;animation-delay:-6s}
+@keyframes deriva{to{transform:translate(60px,40px) scale(1.08)}}
+.r-grid{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;max-width:1300px;margin:0 auto}
+.r-izq .eti{color:#D9A79C;margin-bottom:18px}.r-izq .eti::before{background:#D9A79C}
+.r-izq h2{font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(40px,4.4vw,68px);line-height:1.02;letter-spacing:-.01em}
+.r-izq h2 em{font-style:italic;color:#E6B3A6}
+.big{display:flex;align-items:flex-end;gap:22px;margin-top:34px}
+.big b{font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(110px,10vw,160px);line-height:.8;background:linear-gradient(180deg,#FFF 0%,#E6B3A6 120%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.big .lado{padding-bottom:8px}
+.estrellas{position:relative;display:inline-block;font-size:26px;letter-spacing:.14em;color:rgba(255,255,255,.18)}
+.estrellas::after{content:"\2605\2605\2605\2605\2605";position:absolute;left:0;top:0;color:#E4C08C;width:0;overflow:hidden;white-space:nowrap;animation:llena 1.8s .4s ease-out forwards}
+@keyframes llena{to{width:100%}}
+.google{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#CDBBC3}
+.google svg{width:22px;height:22px;flex:0 0 22px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;max-width:480px}
+.chips span{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:9px 16px;font-size:13px;color:#F3ECEF;background:rgba(255,255,255,.05);animation:flota 6s ease-in-out infinite}
+.chips span:nth-child(2n){animation-delay:-2s}.chips span:nth-child(3n){animation-delay:-4s}
+.anillo-wrap{position:relative;height:520px;perspective:1900px;display:flex;align-items:center;justify-content:center;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.anillo{--r:400px;position:relative;width:360px;height:330px;transform-style:preserve-3d}
+.rc{position:absolute;inset:0;margin:0;box-sizing:border-box;border-radius:26px;padding:34px 32px 26px;display:flex;flex-direction:column;gap:14px;background:#F7F0F3;color:var(--ciruela);box-shadow:0 30px 60px rgba(0,0,0,.35);backface-visibility:hidden;-webkit-backface-visibility:hidden;opacity:.42;transition:opacity .6s,box-shadow .6s}
+.rc.alt{background:#EFDDE2}
+.rc.front{opacity:1;box-shadow:0 30px 70px rgba(0,0,0,.45),0 0 0 1px rgba(230,179,166,.6),0 0 60px rgba(230,179,166,.35)}
+.rc::before{content:"\201C";position:absolute;right:22px;top:-6px;font-family:'DM Serif Display',serif;font-size:130px;line-height:1;color:rgba(168,116,106,.22)}
+.rc .st{color:#C9A062;font-size:17px;letter-spacing:.12em}
+.rc blockquote{margin:0;font-family:'DM Serif Display',serif;font-size:22px;line-height:1.3;flex:1}
+.rc blockquote mark{background:linear-gradient(transparent 58%,rgba(230,179,166,.7) 58%);color:inherit;padding:0 2px}
+.rc figcaption{display:flex;align-items:center;gap:10px;border-top:1px solid rgba(59,42,51,.12);padding-top:14px;font-size:12px;letter-spacing:.06em;color:var(--suave)}
+.rc figcaption svg{width:18px;height:18px}
+.rc figcaption b{font-weight:600;color:var(--ciruela)}
+.rc figcaption span{margin-left:auto}
+.puntos{position:relative;display:flex;justify-content:center;gap:8px;margin-top:-10px}
+.puntos i{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.25);transition:width .3s ease}
+.puntos i.on{width:26px;background:#E6B3A6}
+.frases{position:relative;margin-top:70px;border-top:1px solid rgba(255,255,255,.12);padding:22px 0;overflow:hidden}
+.frases div{display:flex;gap:56px;width:max-content;animation:corre 40s linear infinite;font-family:'DM Serif Display',serif;font-style:italic;font-size:26px;color:#E6B3A6;white-space:nowrap}
+.frases div span::after{content:"\2726";font-style:normal;font-size:14px;color:#C9A062;margin-left:56px;vertical-align:middle}
+@keyframes corre{to{transform:translateX(-50%)}}
+@media(max-width:820px){.resenas{padding:80px 22px 0}.r-grid{grid-template-columns:1fr;gap:10px}.big{margin-top:22px}.chips{margin-top:22px}.chips span{font-size:12px;padding:7px 12px}
+ .anillo{--r:250px;width:262px;height:300px}.anillo-wrap{height:380px;perspective:1200px}.rc{padding:26px 22px 20px}.rc blockquote{font-size:19px}.rc figcaption{font-size:10.5px;white-space:nowrap}
+ .frases{margin-top:44px}.frases div{font-size:20px;gap:36px}.frases div span::after{margin-left:36px}}
+@media(max-width:820px){
+ .top{padding:20px 22px}.menu{display:none}.logo{font-size:22px}.logo small{font-size:8.5px}
+ .top .btn{padding:10px 14px;font-size:10px}
+ .hero{display:flex;flex-direction:column}
+ .ella{position:relative;align-self:flex-end;height:60svh;margin-top:70px;margin-right:-30px;-webkit-mask-image:linear-gradient(180deg,#000 78%,transparent),linear-gradient(90deg,transparent,#000 22%);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,#000 78%,transparent 100%),linear-gradient(90deg,transparent 0,#000 22%);mask-composite:intersect}
+ .circulo{right:-14vw;top:12svh;width:80vw}
+ .txt{max-width:none;min-height:0;padding:0 22px 36px;margin-top:-40px}
+ .eti{font-size:10px;margin-bottom:14px}
+ h1{font-size:46px}.sub{font-size:15.5px;margin-top:16px}.acc{margin-top:24px}
+ .nota{left:22px;top:150px;padding:12px 16px}.nota b{font-size:30px}.nota p{font-size:9px}
+ .antes{left:22px;top:250px;bottom:auto;width:160px;padding:8px}.antes .vp{height:110px}.antes p{font-size:10.5px;margin:6px 4px 2px;min-height:28px}
+ .virtual{display:none}
+ .firma{right:22px;top:auto;bottom:auto;display:none}
+}
+</style>
+</head>
+<body data-fundo="claro">
+<main>
+<section class="hero">
+  <header class="top">
+    <a class="logo" href="#">Skin Esencia<small>Phoenix Esthetician</small></a>
+    <div class="menu"><a href="#">Treatments</a><a href="#">About</a><a href="#">Reviews</a></div>
+    <a class="btn" href="#">Book now</a>
+  </header>
+  <div class="circulo" aria-hidden="true"></div>
+  <img class="ella" src="img/esmeralda.jpg" alt="Esmeralda Ferreira, esthetician at Skin Esencia">
+  <div class="firma"><b>Esmeralda Ferreira</b><small>Esthetician · Founder</small></div>
+  <div class="card nota"><b>5.0</b><span class="est">★★★★★</span><p>21 reviews on Google</p></div>
+  <div class="card antes"><div class="vp"><div class="tira"><div role="img" aria-label="Before and after a custom facial" style="background-image:url(img/antes-despues.jpg);background-position:center 30%"></div><div role="img" aria-label="Acne before and after" style="background-image:url(img/acne-antes-despues.jpg)"></div><div role="img" aria-label="Acne care progress" style="background-image:url(img/acne-progreso.jpg)"></div></div></div><div class="pts"><i class="on"></i><i></i><i></i></div><p><span>Real client</span><em class="cap">Two weeks after a custom facial</em></p></div>
+  <div class="card virtual"><i></i><span>Virtual skin consultations available</span></div>
+  <div class="txt">
+    <div class="eti">Custom facials · Phoenix, AZ</div>
+    <h1><span style="animation-delay:.2s">Skin</span> <span style="animation-delay:.3s">that</span> <span style="animation-delay:.4s">finally</span> <span style="animation-delay:.5s">feels</span> <em><span style="animation-delay:.7s">like</span> <span style="animation-delay:.8s">yours.</span></em></h1>
+    <p class="sub">Custom facials, chemical peels and acne care designed around <b>your</b> skin, with esthetician <b>Esmeralda Ferreira</b>, in Phoenix.</p>
+    <div class="acc"><a class="btn lleno" href="#">Book your facial</a><a class="btn" href="#">See treatments</a></div>
+  </div>
+</section>
+<section class="resenas" id="reviews">
+  <div class="glow g1" aria-hidden="true"></div><div class="glow g2" aria-hidden="true"></div>
+  <div class="r-grid">
+    <div class="r-izq">
+      <div class="eti">Reviews</div>
+      <h2>Clients who finally <em>love their skin</em></h2>
+      <div class="big"><b>5.0</b><div class="lado"><span class="estrellas">★★★★★</span><div class="google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg>21 reviews on Google</div></div></div>
+      <div class="chips"><span>Simple routine</span><span>Clearer skin</span><span>No upselling</span><span>So relaxing</span><span>Monthly facials</span><span>Wedding-ready skin</span></div>
+    </div>
+    <div>
+      <div class="anillo-wrap" aria-roledescription="carousel" aria-label="Client reviews"><div class="anillo"><figure class="rc"><div class="st">★★★★★</div><blockquote>“The BEST custom facials in Phoenix! She’s helped me clear my eczema, rehydrate my skin, work on sun spots, and <mark>feel like my skin is mine again.</mark>”</blockquote><figcaption><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg><b>Google review</b><span>2 months ago</span></figcaption></figure><figure class="rc alt"><div class="st">★★★★★</div><blockquote>“Esmeralda is the absolute best!! I have been going to her for over a year now and <mark>my skin has never felt better.</mark>”</blockquote><figcaption><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg><b>Google review</b><span>2 months ago</span></figcaption></figure><figure class="rc"><div class="st">★★★★★</div><blockquote>“So knowledgeable and genuine. No awkward upselling, always a relaxing vibe. She helped me get <mark>the best skin of my life</mark> before my wedding.”</blockquote><figcaption><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg><b>Google review</b><span>2 months ago</span></figcaption></figure><figure class="rc alt"><div class="st">★★★★★</div><blockquote>“Strong attention to detail, and cared about making sure I have <mark>a solid but simple routine</mark> understanding my tendencies. 10/10 recommend.”</blockquote><figcaption><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg><b>Google review</b><span>3 weeks ago</span></figcaption></figure><figure class="rc"><div class="st">★★★★★</div><blockquote>“Very helpful in understanding <mark>what is going to be most restorative</mark> for your specific skin type!”</blockquote><figcaption><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg><b>Google review</b><span>a month ago</span></figcaption></figure><figure class="rc alt"><div class="st">★★★★★</div><blockquote>“She <mark>genuinely cares about your skin health</mark> and suggests great products without being too pushy or salesy.”</blockquote><figcaption><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1 .7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.7V6.6h-4a12 12 0 0 0 0 10.8l4-3z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg><b>Google review</b><span>2 months ago</span></figcaption></figure></div></div>
+      <div class="puntos" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+  <div class="frases" aria-hidden="true"><div><span>“10/10 recommend”</span><span>“the best skin of my life”</span><span>“my skin has never felt better”</span><span>“no awkward upselling”</span><span>“feel like my skin is mine again”</span><span>“genuinely cares about your skin”</span><span>“10/10 recommend”</span><span>“the best skin of my life”</span><span>“my skin has never felt better”</span><span>“no awkward upselling”</span><span>“feel like my skin is mine again”</span><span>“genuinely cares about your skin”</span></div></div>
+</section>
+
+</main>
+<script>
+(function(){
+  var wrap=document.querySelector('.anillo-wrap'), ring=document.querySelector('.anillo'), dots=[].slice.call(document.querySelectorAll('.puntos i'));
+  if(!ring) return;
+  var cards=[].slice.call(ring.children), n=cards.length, step=360/n, idx=0, paused=false, ang=0;
+  cards.forEach(function(c,k){ c.style.transform='rotateY('+(k*step)+'deg) translateZ(var(--r))'; });
+  function set(a,anim){ ring.style.transition=anim?'transform .9s cubic-bezier(.5,0,.2,1)':'none'; ring.style.transform='translateZ(calc(-1 * var(--r))) rotateY('+a+'deg)'; }
+  function go(i){ idx=i; ang=-i*step; set(ang,true); var f=((i%n)+n)%n; dots.forEach(function(d,k){ d.classList.toggle('on',k===f); }); cards.forEach(function(c,k){ c.classList.toggle('front',k===f); }); }
+  go(0);
+  setInterval(function(){ if(!paused && !down) go(idx+1); },3200);
+  wrap.addEventListener('mouseenter',function(){paused=true}); wrap.addEventListener('mouseleave',function(){paused=false});
+  var down=false,x0=0,start=0,cur=0;
+  wrap.addEventListener('pointerdown',function(e){down=true;x0=e.clientX;start=cur=ang;});
+  window.addEventListener('pointermove',function(e){ if(!down) return; cur=start+(e.clientX-x0)*.32; set(cur,false); },{passive:true});
+  window.addEventListener('pointerup',function(){ if(!down) return; down=false; go(Math.round(-cur/step)); });
+})();
+
+(function(){
+  var vp=document.querySelector('.antes .vp'); if(!vp) return;
+  var tira=vp.querySelector('.tira'), pts=[].slice.call(document.querySelectorAll('.antes .pts i')), cap=document.querySelector('.antes .cap');
+  var caps=['Two weeks after a custom facial','Acne care: before and after','Acne care, step by step'], i=0, n=3, x0=null, t;
+  function go(k){ i=(k+n)%n; tira.style.transform='translateX(-'+(i*100)+'%)'; pts.forEach(function(p,j){p.classList.toggle('on',j===i)}); cap.textContent=caps[i]; }
+  function auto(){ clearInterval(t); t=setInterval(function(){go(i+1)},3500); }
+  vp.addEventListener('pointerdown',function(e){x0=e.clientX; try{vp.setPointerCapture(e.pointerId)}catch(_){}});
+  vp.addEventListener('pointerup',function(e){ if(x0===null) return; var dx=e.clientX-x0; x0=null; go(i+(Math.abs(dx)>25&&dx>0?-1:1)); auto(); });
+  auto();
+})();
+</script>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:2147483646;pointer-events:none;background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27300%27%20height%3D%27150%27%3E%3Ctext%20x%3D%27150%27%20y%3D%2782%27%20text-anchor%3D%27middle%27%20transform%3D%27rotate%28-22%20150%2075%29%27%20font-family%3D%27Poppins%2CArial%2Csans-serif%27%20font-size%3D%2713%27%20font-weight%3D%27600%27%20letter-spacing%3D%271.6%27%20fill%3D%27rgba%2843%2C38%2C34%2C.17%29%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.4%29%27%20stroke-width%3D%27.5%27%3EPR%C3%89-VISUALIZA%C3%87%C3%83O%20%C2%B7%20a.estrategista%3C/text%3E%3C/svg%3E&quot;);background-repeat:repeat"></div>
+<div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;font:600 11px/1 Poppins,system-ui,sans-serif;letter-spacing:.04em;color:#fff;background:rgba(17,17,17,.55);padding:7px 11px;border-radius:999px;pointer-events:none">Pré-visualização · a.estrategista</div>
+</body>
+</html>
