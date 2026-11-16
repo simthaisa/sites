@@ -37,7 +37,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 @media (max-width:400px){.nav nav a.btn{display:none}}
 
 /* pinned blueprint */
-.build{position:relative;height:280vh;background:var(--char)}
+.build{position:relative;height:220vh;background:var(--char)}
 .b-stage{position:sticky;top:0;height:100vh;overflow:hidden;color:var(--white)}
 .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(127,180,230,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(127,180,230,.12) 1px,transparent 1px);background-size:40px 40px}
 .photo{position:absolute;inset:0;background:center/cover no-repeat;opacity:0;transform:scale(1.08);transition:none}
@@ -50,7 +50,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .b-copy h1 em{font-style:normal;color:var(--orange)}
 .b-copy p{max-width:40ch;color:#C9CED2;font-size:19px}
 .pct{font:700 14px var(--display);letter-spacing:.08em;color:var(--line);font-variant-numeric:tabular-nums}
-@media (max-width:860px){.bp{right:-10%;top:auto;bottom:6%;transform:none;width:110vw;opacity:.7}.b-copy{justify-content:flex-start;padding-top:130px}}
+@media (max-width:860px){.bp{right:-10%;top:auto;bottom:6%;transform:none;width:110vw;opacity:.7}.b-copy{justify-content:flex-start;padding-top:130px}.photo::after{background:linear-gradient(180deg,rgba(28,31,34,.9),rgba(28,31,34,.7) 50%,rgba(28,31,34,.15))}}
 
 /* compare */
 .compare{padding-block:120px}
@@ -219,10 +219,10 @@ const build=document.getElementById('top'),photo=document.getElementById('photo'
 const barI=document.getElementById('barI'),barN=document.getElementById('barN'),bar=document.getElementById('bar'),phs=[...document.querySelectorAll('.ph')];
 function frac(el){const r=el.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)))}
 function tick(){
- const p=frac(build),d=Math.min(1,.35+p/.55);
+ const p=frac(build),d=.3+.7*Math.min(1,p/.45);
  shapes.forEach((s,i)=>{const st=i/shapes.length*.5,q=Math.min(1,Math.max(0,(d-st)/.5));s.style.strokeDashoffset=lens[i]*(1-q)});
- const f=Math.min(1,Math.max(0,(p-.6)/.3));photo.style.opacity=f;photo.style.transform=`scale(${1.08-f*.08})`;bp.style.opacity=1-f*.9;
- pct.textContent=(p<.6?(lang==='es'?'PLANO ':'PLAN '):(lang==='es'?'OBRA ':'BUILD '))+Math.round(p*100)+'%';
+ const f=Math.min(1,Math.max(0,(p-.45)/.35));photo.style.opacity=f;photo.style.transform=`scale(${1.08-f*.08})`;bp.style.opacity=1-f*.9;
+ pct.textContent=(p<.45?(lang==='es'?'PLANO ':'PLAN '):(lang==='es'?'OBRA ':'BUILD '))+Math.round(p*100)+'%';
  const r=bar.getBoundingClientRect(),q=Math.min(1,Math.max(0,(innerHeight*.9-r.top)/(innerHeight*.6)));barI.style.width=q*100+'%';barN.textContent=Math.round(q*100)+'%';
  phs.forEach((x,i)=>x.classList.toggle('on',q>=i/4));
 }
