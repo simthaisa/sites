@@ -295,6 +295,23 @@ sunSpr.scale.set(26,26,1);sunSpr.position.set(4,9,-80);scene.add(sunSpr);
 function leafGeo(){const s=new THREE.Shape();s.moveTo(0,0);s.bezierCurveTo(.16,.06,.18,.26,0,.36);s.bezierCurveTo(-.18,.26,-.16,.06,0,0);return new THREE.ShapeGeometry(s,8)}
 const LG=leafGeo();
 const leafMat=new THREE.MeshStandardMaterial({color:'#8E9C86',roughness:.7,side:THREE.DoubleSide});
+/* product labels */
+const labelTexs=[];
+function labelTex(step,name,sub,size,W=1200,H=640){const c=document.createElement('canvas');c.width=W;c.height=H;const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;
+ const draw=()=>{const g=c.getContext('2d');g.fillStyle='#2B2723';g.fillRect(0,0,W,H);
+  g.strokeStyle='rgba(201,164,106,.8)';g.lineWidth=4;g.strokeRect(30,30,W-60,H-60);
+  g.textAlign='center';
+  g.fillStyle='#F6F0E6';g.font='400 150px Fraunces, Georgia, serif';g.letterSpacing='34px';g.fillText('ALMA',W/2+17,200);g.letterSpacing='0px';
+  g.font='700 36px Manrope, sans-serif';g.fillStyle='#D8B57A';g.letterSpacing='12px';g.fillText(step,W/2+6,280);g.letterSpacing='0px';
+  g.fillStyle='#D8B57A';g.fillRect(W/2-70,310,140,4);
+  g.fillStyle='#DCE5D4';g.font='italic 400 112px Fraunces, Georgia, serif';g.fillText(name,W/2,432);
+  g.fillStyle='#E4DBCF';g.font='600 40px Manrope, sans-serif';g.fillText(sub,W/2,505);
+  g.fillStyle='#BFA77E';g.font='700 28px Manrope, sans-serif';g.letterSpacing='7px';g.fillText(size,W/2,570);g.letterSpacing='0px';
+  t.needsUpdate=true};
+ draw();labelTexs.push(draw);return t}
+if(document.fonts&&document.fonts.load){Promise.all([document.fonts.load('400 150px Fraunces'),document.fonts.load('italic 400 112px Fraunces'),document.fonts.load('700 36px Manrope')]).then(()=>labelTexs.forEach(d=>d())).catch(()=>{})}
+function labelMesh(r,h,arc,tex){return new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,64,1,true,-arc/2,arc),new THREE.MeshStandardMaterial({map:tex,emissive:'#ffffff',emissiveMap:tex,emissiveIntensity:.35,roughness:.6,side:THREE.FrontSide}))}
+
 /* station objects */
 const floaters=[];
 // 0 · stone stack + small amber bottle
@@ -305,14 +322,14 @@ const floaters=[];
  const st=new THREE.Group();
  st.add(pebble(1,.42,1.25,.42,'#CFC3B3',0));st.add(pebble(.85,1.12,1.1,.38,'#B9AD9E',1));st.add(pebble(.7,1.7,1.0,.36,'#DCD2C4',2));st.add(pebble(.5,2.16,.95,.4,'#A89C8E',3));
  g.add(st);
- const b=bottle('#C68A3E',.62);b.position.set(-1.5,0,.6);g.add(b);
+ const b=bottle('#C68A3E',.62,false,labelTex('STEP 01','Cleanse','Camellia cleansing oil','100 ML · 3.4 FL OZ'));b.position.set(-1.5,0,.6);g.add(b);
  const leafSprig=sprig();leafSprig.position.set(.9,.05,.9);leafSprig.rotation.y=-.6;g.add(leafSprig);
  scene.add(g);contact(OBJX,Z[0],1.8);floaters.push({o:st,base:0,amp:0,rot:.05});}
 // 1 · serum dropper + gold ring
-const serum=bottle('#E3B06A',1.0,true);serum.position.set(OBJX,.62,Z[1]);scene.add(serum);
+const serum=bottle('#E3B06A',1.0,true,labelTex('STEP 02','Glow','Vitamin C serum','30 ML · 1 FL OZ'));serum.position.set(OBJX,.62,Z[1]);scene.add(serum);
 const ring=new THREE.Mesh(new THREE.TorusGeometry(1.35,.035,16,120),gold);ring.position.set(OBJX,1.75,Z[1]);ring.rotation.x=1.25;scene.add(ring);
 const plinth1=plinth();plinth1.position.set(OBJX,0,Z[1]);scene.add(plinth1);contact(OBJX,Z[1],1.6);
-floaters.push({o:serum,base:.62,amp:.1,rot:.25},{o:ring,base:1.75,amp:.18,rot:0,spin:true});
+floaters.push({o:serum,base:.62,amp:.1,osc:.55},{o:ring,base:1.75,amp:.18,rot:0,spin:true});
 // 2 · cream jar with floating lid + brushes
 {const jar=new THREE.Group();
  const prof=[[0,0],[.78,0],[.85,.06],[.88,.2],[.88,.82],[.84,.9],[.8,.92],[0,.92]].map(([x,y])=>new THREE.Vector2(x,y));
@@ -320,13 +337,14 @@ floaters.push({o:serum,base:.62,amp:.1,rot:.25},{o:ring,base:1.75,amp:.18,rot:0,
  jar.add(new THREE.Mesh(new THREE.LatheGeometry(prof,96),glass));
  const cream=new THREE.Mesh(new THREE.SphereGeometry(.76,64,24,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:'#F8EFE6',roughness:.45}));cream.scale.y=.28;cream.position.y=.86;jar.add(cream);
  const swirl=new THREE.Mesh(new THREE.TorusGeometry(.32,.07,16,64,Math.PI*1.6),new THREE.MeshStandardMaterial({color:'#F8EFE6',roughness:.45}));swirl.rotation.x=-Math.PI/2;swirl.position.y=1.02;jar.add(swirl);
+ const jl=labelMesh(.886,.6,1.9,labelTex('STEP 03','Nourish','Barrier cream','50 ML · 1.7 FL OZ',1800,640));jl.position.y=.48;jar.add(jl);
  jar.position.set(OBJX,.95,Z[2]);scene.add(jar);
  const lid=new THREE.Group();const lidM=new THREE.Mesh(new THREE.CylinderGeometry(.92,.92,.3,96),gold);lid.add(lidM);
  const lidTop=new THREE.Mesh(new THREE.CylinderGeometry(.86,.92,.06,96),new THREE.MeshStandardMaterial({color:'#2E2A26',roughness:.35}));lidTop.position.y=.17;lid.add(lidTop);
  lid.position.set(OBJX+.25,2.6,Z[2]);lid.rotation.set(.45,0,-.3);scene.add(lid);
  const p2=plinth();p2.position.set(OBJX,0,Z[2]);scene.add(p2);contact(OBJX,Z[2],1.6);
  for(let i=0;i<2;i++){const br=brush();br.position.set(OBJX-1.3+i*.35,1.6+i*.25,Z[2]+.4);br.rotation.set(.3,0,.9+i*.25);scene.add(br);floaters.push({o:br,base:br.position.y,amp:.1,rot:0,ph:i*2})}
- floaters.push({o:jar,base:.95,amp:.06,rot:.12},{o:lid,base:2.6,amp:.16,rot:.2,ph:1.2});}
+ floaters.push({o:jar,base:.95,amp:.06,osc:.4},{o:lid,base:2.6,amp:.16,rot:.2,ph:1.2});}
 // 3 · candles on stone block + water bowl
 const flames=[];let candleLight;
 {const g=new THREE.Group();g.position.set(OBJX,0,Z[3]);
@@ -345,7 +363,7 @@ const flames=[];let candleLight;
  scene.add(g);contact(OBJX,Z[3],2.2);}
 
 function plinth(){const g=new THREE.Group();const a=new THREE.Mesh(new THREE.CylinderGeometry(1.15,1.2,.32,72),stone);a.position.y=.16;g.add(a);const b=new THREE.Mesh(new THREE.CylinderGeometry(1.0,1.05,.12,72),stoneDark);b.position.y=.38;g.add(b);return g}
-function bottle(liquid,s=1,dropper=false){const g=new THREE.Group();
+function bottle(liquid,s=1,dropper=false,lab=null){const g=new THREE.Group();
  const prof=[[0,0],[.48,0],[.55,.06],[.56,.2],[.56,1.32],[.52,1.48],[.34,1.64],[.2,1.72],[.19,1.92],[0,1.92]].map(([x,y])=>new THREE.Vector2(x,y));
  const glass=new THREE.MeshPhysicalMaterial({color:'#FFF9F0',transmission:1,roughness:.06,thickness:1.1,ior:1.5,attenuationColor:liquid,attenuationDistance:2.2,specularIntensity:1});
  g.add(new THREE.Mesh(new THREE.LatheGeometry(prof,96),glass));
@@ -354,7 +372,7 @@ function bottle(liquid,s=1,dropper=false){const g=new THREE.Group();
  const collar=new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,.22,48),gold);collar.position.y=2.0;g.add(collar);
  if(dropper){const bulb=new THREE.Mesh(new THREE.SphereGeometry(.22,32,24),new THREE.MeshStandardMaterial({color:'#2E2A26',roughness:.55}));bulb.scale.y=1.7;bulb.position.y=2.42;g.add(bulb)}
  else{const cap=new THREE.Mesh(new THREE.CylinderGeometry(.22,.24,.42,48),new THREE.MeshStandardMaterial({color:'#2E2A26',roughness:.4}));cap.position.y=2.3;g.add(cap)}
- const label=new THREE.Mesh(new THREE.CylinderGeometry(.565,.565,.42,64,1,true,-.9,1.8),new THREE.MeshStandardMaterial({color:'#F6F0E6',roughness:.8,side:THREE.DoubleSide}));label.position.y=.72;g.add(label);
+ const label=labelMesh(.566,.62,2.0,lab||labelTex('STEP 01','Cleanse','Cleansing oil','100 ML · 3.4 FL OZ'));label.position.y=.7;g.add(label);
  g.scale.setScalar(s);return g}
 function brush(){const g=new THREE.Group();const h=new THREE.Mesh(new THREE.CylinderGeometry(.045,.03,1.2,24),new THREE.MeshStandardMaterial({color:'#2E2A26',roughness:.4}));g.add(h);
  const f=new THREE.Mesh(new THREE.CylinderGeometry(.05,.045,.16,24),gold);f.position.y=.68;g.add(f);
@@ -398,7 +416,7 @@ function frame(){const dt=Math.min(.05,clock.getDelta()),t=clock.elapsedTime;
  cur+=(target-cur)*(1-Math.pow(.0016,dt));
  camAt(cur,pos,look);camera.position.copy(pos);camera.lookAt(look);camera.updateProjectionMatrix();
  const mv=RM?0:1;
- floaters.forEach((f,i)=>{f.o.position.y=f.base+Math.sin(t*.9+(f.ph||i))*f.amp*mv;if(f.rot)f.o.rotation.y+=dt*f.rot*mv;if(f.spin){f.o.rotation.z+=dt*.25*mv}});
+ floaters.forEach((f,i)=>{f.o.position.y=f.base+Math.sin(t*.9+(f.ph||i))*f.amp*mv;if(f.rot)f.o.rotation.y+=dt*f.rot*mv;if(f.osc)f.o.rotation.y=Math.sin(t*.35+i)*f.osc*mv;if(f.spin){f.o.rotation.z+=dt*.25*mv}});
  flames.forEach((fl,i)=>{const k=1+Math.sin(t*9+i*2)*.06+Math.sin(t*17+i)*.04;fl.f.scale.set(1,2.1*k,1);fl.gl.material.opacity=.6+.15*k});
  candleLight.intensity=6+Math.sin(t*8)*.6+Math.sin(t*13)*.4;
  const cz=camera.position.z;
