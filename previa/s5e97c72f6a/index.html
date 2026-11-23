@@ -65,6 +65,7 @@ section{padding:clamp(80px,11vw,150px) 0}
 .liso3d{position:relative;height:330vh;background:linear-gradient(180deg,#F7F1EA,#F1E4D4 50%,#F7F1EA)}
 .liso3d .palco{position:sticky;top:0;height:100vh;overflow:hidden}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.barra-liso{position:absolute;left:0;height:3px;border-radius:3px;margin-top:-1px;background:linear-gradient(90deg,transparent,#E9D6B4 12%,#FFF8EC 50%,#E9D6B4 88%,transparent);box-shadow:0 0 14px 3px rgba(255,240,210,.8),0 0 40px 8px rgba(233,214,180,.45);pointer-events:none;z-index:1;opacity:0;transition:opacity .3s}
 .passos{position:absolute;left:clamp(22px,6vw,96px);top:50%;transform:translateY(-50%);width:min(440px,40vw);z-index:2}
 .passo{position:absolute;top:0;left:0;right:0;transform:translateY(-50%);opacity:0;transition:opacity .7s,transform .7s}
 .passo.on{opacity:1}
@@ -203,7 +204,7 @@ footer{border-top:1px solid rgba(201,164,92,.2);padding:30px clamp(22px,6vw,96px
 
 <section class="liso3d" id="liso3d" style="padding:0">
   <div class="palco">
-    <canvas id="gl"></canvas>
+    <canvas id="gl"></canvas><div class="barra-liso" id="barraLiso"></div>
     <div class="passos">
       <div class="passo on" data-p="0"><span class="num">01 · Antes</span><h2>O cabelo chega com <em>volume</em>.</h2><p>Ondas, frizz e um cabelo difícil de domar.</p></div>
       <div class="passo" data-p="1"><span class="num">02 · O método</span><h2>A Paula passa o <em>Método Liso</em>.</h2><p>O método que ela criou e que hoje ensina a outras profissionais.</p></div>
@@ -390,7 +391,10 @@ function loop(){requestAnimationFrame(loop);
  U.uT.value=(performance.now()-t0)/1000;
  U.uM.value.x+=(mx-U.uM.value.x)*.05;
  const y=H*.55-Math.min(Math.max(f,0),1)*H*.86;
- pr.position.y=y; pr.position.x=U.uX.value; pr.visible=f<1.02;
+ pr.position.y=y; pr.position.x=U.uX.value; pr.visible=f<1.02;pr.visible=false;
+ {const v=new THREE.Vector3(U.uX.value,y,0).project(C);const L=new THREE.Vector3(U.uX.value-W*.7,y,0).project(C),Rr=new THREE.Vector3(U.uX.value+W*.7,y,0).project(C);
+  const bl=document.getElementById('barraLiso'),cw=cv.clientWidth,ch=cv.clientHeight;
+  const x0=(L.x+1)/2*cw,x1=(Rr.x+1)/2*cw;bl.style.top=((1-v.y)/2*ch)+'px';bl.style.left=x0+'px';bl.style.width=(x1-x0)+'px';bl.style.opacity=(f<1.0)?1:0;}
  pr.rotation.y=-.25+mx*.2; pr.rotation.x=.12;
  hair.rotation.y=mx*.25; hair.rotation.x=my*.05;
  const fase=k<.3?0:(k<.72?1:2);passos.forEach((p,i)=>p.classList.toggle('on',i===fase));
