@@ -66,6 +66,11 @@ section{padding:clamp(80px,11vw,150px) 0}
 .liso3d .palco{position:sticky;top:0;height:100vh;overflow:hidden}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block}
 .barra-liso{position:absolute;left:0;height:3px;border-radius:3px;margin-top:-1px;background:linear-gradient(90deg,transparent,#E9D6B4 12%,#FFF8EC 50%,#E9D6B4 88%,transparent);box-shadow:0 0 14px 3px rgba(255,240,210,.8),0 0 40px 8px rgba(233,214,180,.45);pointer-events:none;z-index:1;opacity:0;transition:opacity .3s}
+.bl-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;background:#3A2A22;color:#F7F1EA;font:500 12px/1 "Jost",sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:9px 16px;border-radius:999px;box-shadow:0 8px 24px -8px rgba(0,0,0,.5)}
+.bl-tag{position:absolute;right:0;font:500 11px/1 "Jost",sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#3A2A22;background:rgba(247,241,234,.9);padding:6px 10px;border-radius:999px}
+.bl-dep{bottom:12px}.bl-ant{top:12px}
+.bl-dep:after{content:" ↑"}.bl-ant:after{content:" ↓"}
+@media (max-width:900px){.bl-pill{font-size:10px;padding:7px 12px;letter-spacing:.1em}.bl-tag{font-size:9.5px;padding:5px 8px}}
 .passos{position:absolute;left:clamp(22px,6vw,96px);top:50%;transform:translateY(-50%);width:min(440px,40vw);z-index:2}
 .passo{position:absolute;top:0;left:0;right:0;transform:translateY(-50%);opacity:0;transition:opacity .7s,transform .7s}
 .passo.on{opacity:1}
@@ -204,7 +209,7 @@ footer{border-top:1px solid rgba(201,164,92,.2);padding:30px clamp(22px,6vw,96px
 
 <section class="liso3d" id="liso3d" style="padding:0">
   <div class="palco">
-    <canvas id="gl"></canvas><div class="barra-liso" id="barraLiso"></div>
+    <canvas id="gl"></canvas><div class="barra-liso" id="barraLiso"><span class="bl-pill">Método Liso Paula Duarte</span><span class="bl-tag bl-dep">Depois</span><span class="bl-tag bl-ant">Antes</span></div>
     <div class="passos">
       <div class="passo on" data-p="0"><span class="num">01 · Antes</span><h2>O cabelo chega com <em>volume</em>.</h2><p>Ondas, frizz e um cabelo difícil de domar.</p></div>
       <div class="passo" data-p="1"><span class="num">02 · O método</span><h2>A Paula passa o <em>Método Liso</em>.</h2><p>O método que ela criou e que hoje ensina a outras profissionais.</p></div>
@@ -397,7 +402,7 @@ function loop(){requestAnimationFrame(loop);
   const x0=(L.x+1)/2*cw,x1=(Rr.x+1)/2*cw;bl.style.top=((1-v.y)/2*ch)+'px';bl.style.left=x0+'px';bl.style.width=(x1-x0)+'px';bl.style.opacity=(f<1.0)?1:0;}
  pr.rotation.y=-.25+mx*.2; pr.rotation.x=.12;
  hair.rotation.y=mx*.25; hair.rotation.x=my*.05;
- const fase=k<.48?0:(k<.8?1:2);passos.forEach((p,i)=>p.classList.toggle('on',i===fase));
+ const fase=k<.22?0:(k<.86?-1:2);passos.forEach((p,i)=>p.classList.toggle('on',i===fase));
  bi.style.width=(k*100)+'%';
  R.render(S,C);}
 loop();
