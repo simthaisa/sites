@@ -382,15 +382,15 @@ const passos=[...document.querySelectorAll('.passo')],bi=document.getElementById
 function tam(){const w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix();
  U.uX.value=w>900?2.1:0; C.position.z=w>900?11.5:21; C.position.y=w>900?0:-1.2;}
 addEventListener('resize',tam);tam();
-let f=0,ft=0;const t0=performance.now();
+let f=-1,ft=0;const t0=performance.now();
 function loop(){requestAnimationFrame(loop);
  const r=sec.getBoundingClientRect(),tot=r.height-innerHeight;let k=Math.min(1,Math.max(0,-r.top/tot));
  if(r.top>innerHeight||r.bottom<0) return;
- ft=-.04+k*1.18; f+=(ft-f)*.12; U.uF.value=f;
+ const ini=Math.max(0,(H*.55-C.position.y-Math.tan(16*Math.PI/180)*C.position.z*.92)/(H*.86));ft=ini+k*(1.02-ini)*1.12; if(f<ini)f=ini; f+=(ft-f)*.12; U.uF.value=f;
  U.uT.value=(performance.now()-t0)/1000;
  U.uM.value.x+=(mx-U.uM.value.x)*.05;
  const y=H*.55-Math.min(Math.max(f,0),1)*H*.86;
- pr.position.y=y; pr.position.x=U.uX.value; pr.visible=f>.01&&f<1.02;
+ pr.position.y=y; pr.position.x=U.uX.value; pr.visible=f<1.02;
  pr.rotation.y=-.25+mx*.2; pr.rotation.x=.12;
  hair.rotation.y=mx*.25; hair.rotation.x=my*.05;
  const fase=k<.3?0:(k<.72?1:2);passos.forEach((p,i)=>p.classList.toggle('on',i===fase));
