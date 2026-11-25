@@ -40,7 +40,8 @@ header.s{background:rgba(247,239,230,.92);backdrop-filter:blur(10px);box-shadow:
 .hero h1 em{display:block}
 .hero p.lead{font-size:clamp(16px,1.3vw,18px);color:var(--muted);max-width:27em}
 .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
-.pick{margin-top:30px}
+.pick{margin-top:30px;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .6s,transform .6s}
+.pick.show{opacity:1;transform:none;pointer-events:auto}
 .pick .k{display:block;margin-bottom:10px}
 .pick div{display:flex;gap:10px;flex-wrap:wrap}
 .pick button{display:flex;align-items:center;gap:8px;border:1px solid rgba(59,38,24,.18);background:rgba(255,253,250,.75);border-radius:999px;padding:7px 14px 7px 7px;font:400 14px Jost,sans-serif;color:var(--ink);cursor:pointer;transition:.25s}
@@ -300,7 +301,7 @@ document.getElementById('go').onclick=()=>{const v=k=>document.querySelector(`.c
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
-const cv=document.getElementById('gl'),sec=document.getElementById('topo'),bar=document.getElementById('bar'),pb=document.getElementById('pb');
+const pk=document.querySelector('.pick'),cv=document.getElementById('gl'),sec=document.getElementById('topo'),bar=document.getElementById('bar'),pb=document.getElementById('pb');
 let R;try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){return}
 R.setPixelRatio(Math.min(devicePixelRatio,2));
 const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(32,1,.1,100);C.position.set(0,0,11);
@@ -364,6 +365,7 @@ function loop(){requestAnimationFrame(loop);
  const cw=cv.clientWidth,ch=cv.clientHeight,x0=(L.x+1)/2*cw,x1=(Rr.x+1)/2*cw;
  bar.style.top=((1-pv.y)/2*ch)+'px';bar.style.left=x0+'px';bar.style.width=(x1-x0)+'px';bar.style.opacity=f<1.0?1:0;
  pb.style.width=(k*100)+'%';
+ if(f>.55&&!pk.classList.contains('show'))pk.classList.add('show');
  R.render(S,C);}
 loop();
 })();
