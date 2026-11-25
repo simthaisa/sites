@@ -73,7 +73,8 @@ h1 .hl::after{content:"";position:absolute;left:-.04em;right:-.06em;bottom:.08em
 .tag.a{right:20px;background:#fff;color:var(--ink)}
 .cap{position:absolute;left:0;right:0;bottom:0;padding:60px 24px 20px;background:linear-gradient(transparent,rgba(10,10,10,.6));color:#fff;font-size:14px;font-weight:600;display:flex;justify-content:space-between;gap:12px;pointer-events:none}
 .cap span:last-child{opacity:.8;font-weight:500}
-.ba input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none}
+.ba input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;pointer-events:none}
+.ba{touch-action:pan-y;cursor:ew-resize;-webkit-user-select:none;user-select:none}
 .ba input:focus-visible ~ .handle .knob{outline:3px solid #fff;outline-offset:3px}
 
 .team{position:absolute;left:-34px;top:34px;display:flex;align-items:center;gap:12px;background:var(--paper);border-radius:18px;padding:10px 18px 10px 10px;box-shadow:0 22px 44px rgba(20,21,23,.22);z-index:3}
@@ -209,6 +210,11 @@ h1 .ln span{animation:up 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--
     follow(v); r.value=v; requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
+  var drag=false;
+  function at(e){var b=ba.getBoundingClientRect();var v=Math.max(0,Math.min(100,(e.clientX-b.left)/b.width*100));follow(v);r.value=v;}
+  ba.addEventListener('pointerdown',function(e){stopped=true;drag=true;try{ba.setPointerCapture(e.pointerId)}catch(_){}at(e)});
+  ba.addEventListener('pointermove',function(e){if(drag)at(e)});
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(n){ba.addEventListener(n,function(){drag=false})});
   ['pointerdown','keydown','focus'].forEach(function(e){r.addEventListener(e,function(){stopped=true})});
 })();
 </script>
