@@ -307,7 +307,7 @@ const pk=document.querySelector('.pick'),cv=document.getElementById('gl'),sec=do
 let R;try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){return}
 R.setPixelRatio(Math.min(devicePixelRatio,2));
 const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(32,1,.1,100);C.position.set(0,0,11);
-const mob=innerWidth<900,N=mob?1400:2600,M=90,W=3.6,H=9.6;
+const mob=innerWidth<900,N=mob?2200:2600,M=90,W=3.6,H=9.6;
 const pos=[],aU=[],aT=[],aR=[],idx=[];let v=0;
 for(let i=0;i<N;i++){const u=Math.random(),r=Math.random();for(let j=0;j<M;j++){pos.push(0,0,0);aU.push(u);aT.push(j/(M-1));aR.push(r);if(j<M-1)idx.push(v+j,v+j+1)}v+=M}
 const g=new THREE.BufferGeometry();
@@ -319,8 +319,9 @@ const mat=new THREE.ShaderMaterial({uniforms:U,transparent:true,depthWrite:false
 vertexShader:`attribute float aU,aT,aR;uniform float uT,uF,uX;uniform vec2 uM;varying float vT,vP,vR,vU;
 void main(){
  float L=.84+.16*aR; float t=aT*L; float c=aU-.5;
- float crown=.42+.58*smoothstep(0.,.2,t);
- vec3 q=vec3(c*${W}*crown*(1.+.35*t),${H}*.38-t*${H},cos(c*2.6)*1.1-1.1+.5*(1.-crown));
+ float crown=.62+.38*smoothstep(0.,.25,t);
+ float e=min(1.,abs(c)*2.);float dome=(1.-sqrt(1.-e*e))*(1.-smoothstep(0.,.3,t));
+ vec3 q=vec3(c*${W}*crown*(1.+.35*t),${H}*.38-t*${H}-dome*1.5,cos(c*2.6)*1.1-1.1+.6*(1.-crown));
  float p=1.-smoothstep(uF-.05,uF+.03,t);
  float amp=(.20+.06*aR)*smoothstep(.15,.5,t)*(.85+.3*p);
  float ph=t*7.*3.14159+c*2.2+aR*.7;
@@ -344,7 +345,8 @@ void main(){
  float b=exp(-pow((vT-.42-.05*sin(uT*.5)-.05*sin(vU*8.))*8.,2.));
  depois+=vec3(1.,.93,.78)*b*.22;
  vec3 c=mix(antes,depois,vP);
- float al=(.5+.3*vR)*(1.-smoothstep(.88,1.,vT))*smoothstep(0.,.05,vT);
+ c*=.82+.36*fract(sin(vU*913.7+vR*71.3)*4375.5);
+ float al=mix(.85,.5+.3*vR,smoothstep(.05,.3,vT))*(1.-smoothstep(.88,1.,vT));
  gl_FragColor=vec4(c,al);}`});
 const hair=new THREE.LineSegments(g,mat);S.add(hair);
 const tons={mel:['#F2D7A0','#C08A52'],claro:['#FBEFD3','#DDBB82'],caramelo:['#E0B47E','#93613A'],perola:['#F7F2E8','#CDBFA6']};
@@ -352,7 +354,7 @@ let alvo=tons.mel.map(x=>new THREE.Color(x));
 document.querySelectorAll('#pick button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#pick button').forEach(x=>x.classList.toggle('on',x===b));alvo=tons[b.dataset.c].map(x=>new THREE.Color(x))});
 let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
 function tam(){const w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix();
- const d=w>900;U.uX.value=d?2.5:0;C.position.z=d?14.5:20;C.position.y=d?-.6:2.6;}
+ const d=w>900;U.uX.value=d?2.5:0;C.position.z=d?14.5:20;C.position.y=d?.5:3.3;}
 addEventListener('resize',tam);tam();
 let f=0;const t0=performance.now();
 function loop(){requestAnimationFrame(loop);
