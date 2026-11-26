@@ -607,7 +607,7 @@ function team(){if(!st.day){var d=new Date();d.setHours(12);st.day=d}
 M.addEventListener('click',function(e){if(e.target===M||e.target.closest('.x'))close();if(e.target.id==='tm')team()});
 addEventListener('keydown',function(e){if(e.key==='Escape')close()});
 
-(function(){var el=document.getElementById('plist');if(!el)return;el.innerHTML=CATS.map(function(c,ci){return '<details class="pc"'+(ci<2?' open':'')+'><summary>'+c.t+'<small>'+c.i.length+' opções</small></summary><ul>'+c.i.map(function(s){return '<li><div><b>'+s.n+'</b>'+(s.x?'<span>'+s.x+'</span>':'')+'</div><div class="r"><span class="pv">'+s.p+'</span>'+(s.pk?'<i class="pk">Pack</i>':'<button data-n="'+s.n+'">Marcar</button>')+'</div></li>'}).join('')+'</ul></details>'}).join('');
+(function(){var el=document.getElementById('plist');if(!el)return;el.innerHTML=CATS.map(function(c,ci){return '<details class="pc"><summary>'+c.t+'<small>'+c.i.length+' opções</small></summary><ul>'+c.i.map(function(s){return '<li><div><b>'+s.n+'</b>'+(s.x?'<span>'+s.x+'</span>':'')+'</div><div class="r"><span class="pv">'+s.p+'</span>'+(s.pk?'<i class="pk">Pack</i>':'<button data-n="'+s.n+'">Marcar</button>')+'</div></li>'}).join('')+'</ul></details>'}).join('');
  el.querySelectorAll('button[data-n]').forEach(function(b){b.onclick=function(){window.bkOpenSvc(b.dataset.n)}})})();
 document.querySelectorAll('.tc').forEach(function(c,i){var b=document.createElement('button');b.className='mk';b.textContent='Marcar →';b.onclick=function(){open(i)};c.appendChild(b)});
 document.querySelectorAll('.navcta,.hero .b1,.book .b1').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(null)})});
