@@ -441,5 +441,116 @@ function loop(n){requestAnimationFrame(loop);var t=(n-t0)/1000;cur=pick();
 requestAnimationFrame(loop);
 })();
 </script>
+<style>
+.tc .mk{margin-top:18px;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:99px;border:0;cursor:pointer;font:600 14px Jost,sans-serif;background:linear-gradient(100deg,#b08848,#ecd29d,#b08848);background-size:200%;color:#1a1208;animation:shine 5s linear infinite;transition:transform .25s}
+.tc .mk:hover{transform:translateY(-2px)}
+#bk{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;background:rgba(8,6,5,.7);backdrop-filter:blur(8px)}
+#bk.on{display:flex}
+.bkp{width:min(560px,94vw);max-height:92vh;overflow:auto;background:#141110;border:1px solid rgba(201,164,106,.3);border-radius:28px;color:#F4ECE2;font-family:Jost,sans-serif;font-variant-numeric:lining-nums;box-shadow:0 40px 100px -30px rgba(0,0,0,.9);animation:bkin .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes bkin{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+.bkh{display:flex;justify-content:space-between;align-items:flex-start;padding:26px 28px 6px}
+.bkh small{font:500 11px Jost;letter-spacing:.22em;text-transform:uppercase;color:#C9A46A}
+.bkh h3{font:500 30px/1.1 'Cormorant Garamond',serif;margin-top:6px}
+.bkh .x{width:38px;height:38px;border-radius:50%;border:1px solid rgba(244,236,226,.2);background:none;color:#F4ECE2;font-size:18px;cursor:pointer;flex:none}
+.bkb{padding:14px 28px 26px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.meta span{font-size:13px;color:#B5A89B;border:1px solid rgba(201,164,106,.25);border-radius:99px;padding:6px 12px}
+.meta b{color:#EBD3A2;font-weight:600}
+.lbl{font:500 11px Jost;letter-spacing:.2em;text-transform:uppercase;color:#8f8377;margin:18px 0 10px}
+.svcs{display:grid;gap:8px}
+.svcs button{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid rgba(201,164,106,.2);background:rgba(255,255,255,.03);color:#F4ECE2;font:500 15px Jost;cursor:pointer}
+.svcs button:hover{border-color:#C9A46A}
+.svcs em{font-style:normal;color:#EBD3A2;font-size:13px;white-space:nowrap}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:62px;padding:10px 0;border-radius:16px;border:1px solid rgba(201,164,106,.2);background:none;color:#F4ECE2;cursor:pointer;text-align:center;font-family:Jost}
+.day small{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8f8377}
+.day b{display:block;font:500 22px 'Cormorant Garamond',serif;margin-top:2px}
+.day.sel{background:#EBD3A2;color:#1a1208;border-color:#EBD3A2}.day.sel small{color:#5b4a2c}
+.day:disabled{opacity:.3;cursor:default}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.slot{padding:12px 0;border-radius:12px;border:1px solid rgba(201,164,106,.25);background:none;color:#F4ECE2;font:500 15px Jost;cursor:pointer;transition:background .2s}
+.slot:hover{background:rgba(201,164,106,.12)}
+.slot.sel{background:#C9A46A;color:#1a1208;border-color:#C9A46A}
+.empty{font-size:14px;color:#8f8377;padding:10px 0}
+.fld{display:grid;gap:10px;margin-top:6px}
+.fld input{width:100%;padding:15px 16px;border-radius:14px;border:1px solid rgba(201,164,106,.25);background:rgba(255,255,255,.04);color:#F4ECE2;font:400 15px Jost;outline:none}
+.fld input:focus{border-color:#C9A46A}
+.go{width:100%;margin-top:20px;padding:17px;border-radius:99px;border:0;font:600 15px Jost;cursor:pointer;background:linear-gradient(100deg,#b08848,#ecd29d,#b08848);background-size:200%;color:#1a1208}
+.go:disabled{opacity:.35;cursor:default}
+.back{background:none;border:0;color:#B5A89B;font:500 13px Jost;cursor:pointer;margin-top:14px;text-decoration:underline}
+.ok{text-align:center;padding:10px 28px 26px}
+.ok .ic{width:72px;height:72px;border-radius:50%;margin:6px auto 16px;display:grid;place-items:center;background:rgba(201,164,106,.15);color:#EBD3A2;font-size:32px}
+.ok h4{font:500 32px 'Cormorant Garamond',serif}
+.ok p{color:#B5A89B;font-size:15px;line-height:1.6;margin-top:8px}
+.ok .card2{margin:18px 0 0;padding:16px;border-radius:16px;border:1px solid rgba(201,164,106,.25);text-align:left;font-size:14.5px;line-height:1.8}
+.ok .card2 b{color:#EBD3A2;font-weight:500}
+.demo{margin:18px 28px 24px;padding:12px 14px;border-radius:14px;background:rgba(155,255,155,.07);border:1px dashed rgba(155,255,155,.35);font-size:12.5px;color:#cfe9cf;line-height:1.5}
+.demo button{background:none;border:0;color:#9BFF9B;font:600 12.5px Jost;cursor:pointer;text-decoration:underline;padding:0}
+.team{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.team div{border:1px solid rgba(201,164,106,.2);border-radius:16px;padding:12px}
+.team h5{font:600 14px Jost;color:#EBD3A2;margin-bottom:6px}
+.team p{font-size:12.5px;color:#B5A89B;line-height:1.7}
+.team p.new{color:#9BFF9B}
+@media (max-width:600px){#bk{align-items:flex-end}.bkp{width:100%;max-height:94vh;border-radius:26px 26px 0 0}.slots{grid-template-columns:repeat(3,1fr)}}
+</style>
+<div id="bk" aria-hidden="true"><div class="bkp" role="dialog" aria-modal="true"><div id="bkc"></div>
+<div class="demo">Demonstração: os horários ocupados são de exemplo e nada é enviado. Na versão real, cada marcação entra direto na agenda Google de quem vai atender. <button id="tm">Ver a agenda da equipa</button></div></div></div>
+<script>
+(function(){
+var STAFF={s:'Stela',l:'Lurdes'};
+var SVC=[
+ {n:'Depilação a laser',d:30,p:'desde 39,90 €',who:['s','l']},
+ {n:'HIFU rosto e corpo',d:60,p:'desde 35 €',who:['s']},
+ {n:'Pressoterapia',d:45,p:'35 €',who:['s','l']},
+ {n:'Lipocavitação',d:45,p:'desde 35 €',who:['s']},
+ {n:'Radiofrequência e limpeza de pele',d:60,p:'35 €',who:['l']},
+ {n:'Massagem terapêutica',d:60,p:'35 €',who:['l']}];
+var OPEN=600,CLOSE=1140,STEP=30; // 10:00–19:00
+var DOW=['dom','seg','ter','qua','qui','sex','sáb'],MON=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+var book={}; // key: date -> [{st,a,b,svc,client}]
+function key(d){return d.toISOString().slice(0,10)}
+function seed(d){var k=key(d);if(book[k])return book[k];var r=d.getDate()*7+d.getMonth()*13,l=[];
+ [[660,60,'s','HIFU rosto e corpo'],[840,45,'s','Pressoterapia'],[600,30,'l','Depilação a laser'],[900,60,'l','Massagem terapêutica'],[1020,45,'s','Lipocavitação']].forEach(function(x,i){if((r+i)%3!==0)l.push({st:x[2],a:x[0]+((r+i)%2)*30,b:x[0]+((r+i)%2)*30+x[1],svc:x[3],c:'Cliente'})});
+ return book[k]=l}
+function free(st,day,a,b){return seed(day).every(function(x){return x.st!==st||b<=x.a||a>=x.b})}
+function hm(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function slots(svc,day){var out=[],now=new Date();for(var t=OPEN;t+svc.d<=CLOSE;t+=STEP){if(key(day)===key(now)&&t<=now.getHours()*60+now.getMinutes()+60)continue;var av=svc.who.filter(function(s){return free(s,day,t,t+svc.d)});if(av.length)out.push({t:t,av:av})}return out}
+var st={},C=document.getElementById('bkc'),M=document.getElementById('bk');
+function days(){var r=[],d=new Date();d.setHours(12,0,0,0);for(var i=0;i<14;i++){var x=new Date(d);x.setDate(d.getDate()+i);r.push(x)}return r}
+function open(i){st={svc:i==null?null:SVC[i],day:null,slot:null};M.classList.add('on');document.body.style.overflow='hidden';st.svc?pick():chooseSvc()}
+function close(){M.classList.remove('on');document.body.style.overflow=''}
+function head(t,s){return '<div class="bkh"><div><small>'+s+'</small><h3>'+t+'</h3></div><button class="x" aria-label="Fechar">✕</button></div>'}
+function chooseSvc(){C.innerHTML=head('Que tratamento quer marcar?','Marcação online')+'<div class="bkb"><div class="svcs">'+SVC.map(function(s,i){return '<button data-i="'+i+'">'+s.n+'<em>'+s.p+'</em></button>'}).join('')+'</div></div>';
+ C.querySelectorAll('.svcs button').forEach(function(b){b.onclick=function(){st.svc=SVC[+b.dataset.i];pick()}})}
+function pick(){var ds=days();if(!st.day){st.day=ds.find(function(d){return d.getDay()!==0&&slots(st.svc,d).length})}
+ var sl=st.day?slots(st.svc,st.day):[];
+ C.innerHTML=head(st.svc.n,'Escolha o dia e a hora')+'<div class="bkb"><div class="meta"><span><b>'+st.svc.d+' min</b></span><span>'+st.svc.p+'</span></div>'+
+ '<div class="lbl">Dia</div><div class="days">'+ds.map(function(d,i){var closed=d.getDay()===0;return '<button class="day'+(st.day&&key(d)===key(st.day)?' sel':'')+'" data-i="'+i+'"'+(closed?' disabled':'')+'><small>'+DOW[d.getDay()]+'</small><b>'+d.getDate()+'</b><small>'+MON[d.getMonth()]+'</small></button>'}).join('')+'</div>'+
+ '<div class="lbl">Horários livres</div>'+(sl.length?'<div class="slots">'+sl.map(function(s){return '<button class="slot'+(st.slot&&st.slot.t===s.t?' sel':'')+'" data-t="'+s.t+'">'+hm(s.t)+'</button>'}).join('')+'</div>':'<p class="empty">Sem horários livres neste dia. Escolha outro dia.</p>')+
+ '<button class="go" '+(st.slot?'':'disabled')+'>Continuar</button>'+(st.fromList?'<button class="back">← Outro tratamento</button>':'')+'</div>';
+ C.querySelectorAll('.day').forEach(function(b){b.onclick=function(){st.day=ds[+b.dataset.i];st.slot=null;pick()}});
+ C.querySelectorAll('.slot').forEach(function(b){b.onclick=function(){st.slot=sl.find(function(s){return s.t===+b.dataset.t});pick()}});
+ C.querySelector('.go').onclick=function(){if(st.slot)form()};
+ var bk=C.querySelector('.back');if(bk)bk.onclick=chooseSvc;
+ var s=C.querySelector('.day.sel');if(s)s.scrollIntoView({block:'nearest',inline:'center'})}
+function when(){return DOW[st.day.getDay()]+', '+st.day.getDate()+' de '+MON[st.day.getMonth()]+' às '+hm(st.slot.t)}
+function form(){C.innerHTML=head('Quase pronto','Os seus dados')+'<div class="bkb"><div class="meta"><span><b>'+st.svc.n+'</b></span><span>'+when()+'</span></div><div class="fld"><input id="fn" placeholder="Nome" autocomplete="name"><input id="fp" placeholder="Telemóvel" inputmode="tel" autocomplete="tel"></div><button class="go" disabled>Confirmar marcação</button><button class="back">← Mudar dia ou hora</button></div>';
+ var fn=C.querySelector('#fn'),fp=C.querySelector('#fp'),go=C.querySelector('.go');
+ function chk(){go.disabled=!(fn.value.trim().length>1&&fp.value.replace(/\D/g,'').length>=9)}fn.oninput=fp.oninput=chk;
+ C.querySelector('.back').onclick=pick;
+ go.onclick=function(){var av=st.slot.av,cnt=function(s){return seed(st.day).filter(function(x){return x.st===s}).length};var who=av.slice().sort(function(a,b){return cnt(a)-cnt(b)})[0];
+  seed(st.day).push({st:who,a:st.slot.t,b:st.slot.t+st.svc.d,svc:st.svc.n,c:fn.value.trim(),nw:1});done(who,fn.value.trim())};fn.focus()}
+function done(who,name){C.innerHTML=head('Marcação confirmada','Obrigada, '+name.split(' ')[0])+'<div class="bkb ok"><div class="ic">✓</div><h4>Até breve!</h4><p>Vai receber a confirmação por e-mail. Se precisar de alterar, é só enviar uma mensagem.</p><div class="card2"><b>'+st.svc.n+'</b><br>'+when()+'<br>Com a '+STAFF[who]+' · R. Armando Antunes da Silva, 13 · Évora</div><button class="go">Fechar</button></div>';C.querySelector('.go').onclick=close}
+function team(){if(!st.day){var d=new Date();d.setHours(12);st.day=d}
+ var l=seed(st.day).slice().sort(function(a,b){return a.a-b.a});function col(s){var x=l.filter(function(b){return b.st===s});return '<div><h5>'+STAFF[s]+'</h5>'+(x.length?x.map(function(b){return '<p'+(b.nw?' class="new"':'')+'>'+hm(b.a)+'–'+hm(b.b)+' · '+b.svc+(b.nw?' (nova)':'')+'</p>'}).join(''):'<p>Sem marcações</p>')+'</div>'}
+ C.innerHTML=head('Agenda da equipa','Como a Stela vê · '+st.day.getDate()+' de '+MON[st.day.getMonth()])+'<div class="bkb"><div class="team">'+col('s')+col('l')+'</div><p class="empty" style="margin-top:12px">Cada tratamento só mostra horários em que alguém que o faz está livre. Quem está mais livre no dia recebe a marcação.</p><button class="go">Fazer uma marcação</button></div>';C.querySelector('.go').onclick=function(){st.svc?pick():chooseSvc()}}
+M.addEventListener('click',function(e){if(e.target===M||e.target.closest('.x'))close();if(e.target.id==='tm')team()});
+addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+document.querySelectorAll('.tc').forEach(function(c,i){var b=document.createElement('button');b.className='mk';b.textContent='Marcar →';b.onclick=function(){open(i)};c.appendChild(b)});
+document.querySelectorAll('.navcta,.hero .b1,.book .b1').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(null);st.fromList=1})});
+})();
+</script>
+
 </body>
 </html>
