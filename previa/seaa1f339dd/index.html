@@ -123,6 +123,37 @@ body.open .drawer{transform:none}
 .secure{text-align:center;font-size:13px;opacity:.6;margin-top:10px}
 .toast{position:fixed;left:50%;bottom:28px;translate:-50% 140px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:70;transition:translate .4s cubic-bezier(.2,.8,.2,1)}
 .toast.show{translate:-50% 0}
+/* EASEL 3D */
+.studio{position:relative;height:340vh;background:var(--ink)}
+.studio-stick{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 62% 42%,#3a2a6a 0%,#1B1530 62%)}
+#easel{position:absolute;inset:0;width:100%;height:100%;display:block}
+.studio-copy{position:absolute;z-index:2;left:clamp(16px,5vw,72px);top:50%;translate:0 -50%;width:min(440px,40vw);color:#fff}
+.studio-copy .kick{display:inline-block;background:var(--yellow);color:var(--ink);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;border-radius:999px}
+.studio-copy h2{font-weight:800;font-size:clamp(34px,4.6vw,66px);line-height:.95;letter-spacing:-.035em;margin:18px 0 26px}
+.studio-copy h2 em{font-style:normal;color:var(--yellow)}
+.steps{list-style:none;display:flex;flex-direction:column;gap:14px}
+.steps li{display:flex;gap:14px;align-items:flex-start;opacity:.28;transition:opacity .5s,transform .5s;transform:translateX(-8px)}
+.steps li.on{opacity:1;transform:none}
+.steps b{flex:none;width:34px;height:34px;border-radius:50%;background:var(--pink);display:grid;place-items:center;font:800 15px "Bricolage Grotesque"}
+.steps li:nth-child(2) b{background:var(--blue)}
+.steps li:nth-child(3) b{background:var(--orange)}
+.steps strong{display:block;font:700 18px "DM Sans"}
+.steps span{opacity:.75;font-size:15px;line-height:1.45}
+.studio-cta{margin-top:26px;opacity:0;transform:translateY(10px);transition:.5s;pointer-events:none}
+.studio-cta.on{opacity:1;transform:none;pointer-events:auto}
+.studio-stick::after{content:'';position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(transparent,rgba(27,21,48,.92) 45%);z-index:1;pointer-events:none}
+.studio-bar{position:absolute;z-index:2;left:50%;bottom:26px;translate:-50% 0;width:180px;height:5px;border-radius:9px;background:rgba(255,255,255,.18);overflow:hidden}
+.studio-bar i{display:block;height:100%;width:0;background:var(--yellow);border-radius:9px}
+.studio-hint{position:absolute;z-index:2;left:50%;bottom:40px;translate:-50% 0;color:#fff;opacity:.6;font-size:13px;letter-spacing:.05em;transition:opacity .4s}
+.studio-fallback{position:absolute;right:8%;top:50%;translate:0 -50%;width:min(360px,40vw);border-radius:6px;box-shadow:0 30px 60px rgba(0,0,0,.4);display:none}
+@media(max-width:860px){
+ .studio-stick::after{height:48%}
+ .studio-copy{top:auto;bottom:64px;translate:none;width:auto;right:16px;left:16px}
+ .studio-copy h2{font-size:30px;margin:12px 0 14px}
+ .steps{gap:8px}.steps strong{font-size:15px}.steps span{display:none}.steps b{width:28px;height:28px;font-size:13px}
+ .studio-cta{margin-top:14px}
+ .studio-fallback{top:8%;translate:-50% 0;left:50%;right:auto;width:60vw}
+}
 </style>
 </head>
 <body>
@@ -148,6 +179,25 @@ body.open .drawer{transform:none}
     <div class="float f3"><img src="img/flor1.jpg" alt="Original floral painting"></div>
     <div class="arch"><img class="me" src="img/alyne-recorte.png" alt="Alyne Favoretti holding her paintbrushes"></div>
     <div class="sticker">made<br>by hand<br>♥</div>
+  </div>
+</section>
+
+<section class="studio" id="studio">
+  <div class="studio-stick">
+    <canvas id="easel" aria-label="A canvas on Alyne's wooden easel being painted"></canvas>
+    <img class="studio-fallback" src="img/tela-joy.jpg" alt="“Joy”, original painting by Alyne Favoretti">
+    <div class="studio-copy">
+      <span class="kick">From Alyne’s easel</span>
+      <h2>Every piece starts with a <em>single stroke.</em></h2>
+      <ol class="steps">
+        <li class="on"><b>1</b><div><strong>Your story first</strong><span>Every custom piece starts with a conversation about you.</span></div></li>
+        <li><b>2</b><div><strong>Painted by hand</strong><span>Layer by layer, in Alyne’s colorful, maximalist style.</span></div></li>
+        <li><b>3</b><div><strong>Signed &amp; shipped</strong><span>Finished, signed and sent straight to your door.</span></div></li>
+      </ol>
+      <a class="btn light studio-cta" href="#">Shop original art →</a>
+    </div>
+    <div class="studio-hint" id="hint">Scroll to paint ↓</div>
+    <div class="studio-bar"><i id="bar"></i></div>
   </div>
 </section>
 
@@ -206,6 +256,109 @@ function render(){cnts().forEach(c=>c.textContent=bag.length);document.getElemen
 function openBag(){document.body.classList.add('open')}
 function closeBag(){document.body.classList.remove('open')}
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const sec=document.getElementById('studio'),cv=document.getElementById('easel'),bar=document.getElementById('bar'),hint=document.getElementById('hint');
+const steps=[...sec.querySelectorAll('.steps li')],cta=sec.querySelector('.studio-cta');
+function fallback(){cv.style.display='none';sec.querySelector('.studio-fallback').style.display='block'}
+if(!window.THREE){fallback();return}
+let R;try{R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){fallback();return}
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputEncoding=THREE.sRGBEncoding;R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(34,1,.1,60);
+
+/* light */
+S.add(new THREE.HemisphereLight(0xfff1dd,0x3a2a6a,.75));
+const key=new THREE.DirectionalLight(0xfff0d8,1.15);key.position.set(2.6,4.6,3.4);key.castShadow=true;key.shadow.mapSize.set(1024,1024);
+Object.assign(key.shadow.camera,{left:-3,right:3,top:4,bottom:-1,near:1,far:12});key.shadow.radius=6;S.add(key);
+const rim=new THREE.PointLight(0xff4fa8,.9,9);rim.position.set(-2.4,2.6,-1.4);S.add(rim);
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.ShadowMaterial({opacity:.38}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;S.add(floor);
+
+/* wood */
+function woodTex(){const c=document.createElement('canvas');c.width=128;c.height=1024;const x=c.getContext('2d');
+ x.fillStyle='#b9824f';x.fillRect(0,0,128,1024);
+ for(let i=0;i<46;i++){const px=Math.random()*128,w=1+Math.random()*4;x.strokeStyle=`rgba(${90+Math.random()*40|0},${52+Math.random()*25|0},${24+Math.random()*15|0},${.18+Math.random()*.3})`;x.lineWidth=w;x.beginPath();x.moveTo(px,0);for(let y=0;y<=1024;y+=32)x.lineTo(px+Math.sin(y/120+i)*3,y);x.stroke()}
+ const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.wrapS=t.wrapT=THREE.RepeatWrapping;return t}
+const woodM=new THREE.MeshStandardMaterial({map:woodTex(),roughness:.62,metalness:0});
+const up=new THREE.Vector3(0,1,0);
+function beam(a,b,t){a=new THREE.Vector3(...a);b=new THREE.Vector3(...b);const d=b.clone().sub(a),L=d.length();
+ const m=new THREE.Mesh(new THREE.BoxGeometry(t,L,t*.8),woodM);m.position.copy(a).add(b).multiplyScalar(.5);m.quaternion.setFromUnitVectors(up,d.normalize());m.castShadow=true;S.add(m);return m}
+beam([-.62,0,.36],[-.1,2.78,.02],.075);beam([.62,0,.36],[.1,2.78,.02],.075);beam([0,0,-.78],[0,2.62,-.04],.065);
+beam([0,.35,.2],[0,2.95,-.01],.06);beam([-.42,1.02,.27],[.42,1.02,.27],.05);
+const ledge=new THREE.Mesh(new THREE.BoxGeometry(1.7,.06,.16),woodM);ledge.position.set(0,.6,.33);ledge.castShadow=true;S.add(ledge);
+const lip=new THREE.Mesh(new THREE.BoxGeometry(1.7,.1,.03),woodM);lip.position.set(0,.64,.42);S.add(lip);
+
+/* paint canvas */
+const TW=700,TH=980,pc=document.createElement('canvas');pc.width=TW;pc.height=TH;const g=pc.getContext('2d');
+const tex=new THREE.CanvasTexture(pc);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=R.capabilities.getMaxAnisotropy();
+const CW=1.3,CH=1.82,ct=.05;
+const side=new THREE.MeshStandardMaterial({color:0xf1ebe0,roughness:.9});
+const front=new THREE.MeshStandardMaterial({map:tex,roughness:.78});
+const board=new THREE.Mesh(new THREE.BoxGeometry(CW,CH,ct),[side,side,side,side,front,side]);
+const holder=new THREE.Group();holder.position.set(0,.63+CH/2,.36);holder.rotation.x=-.115;holder.add(board);board.position.z=0;board.castShadow=true;S.add(holder);
+const clamp=new THREE.Mesh(new THREE.BoxGeometry(.34,.07,.14),woodM);clamp.position.set(0,CH/2+.03,-.01);holder.add(clamp);
+
+/* brush */
+const brush=new THREE.Group();
+const bristleM=new THREE.MeshStandardMaterial({color:0xE3127F,roughness:.5});
+const bris=new THREE.Mesh(new THREE.CylinderGeometry(.034,.006,.13,16),bristleM);bris.position.y=.065;
+const fer=new THREE.Mesh(new THREE.CylinderGeometry(.036,.034,.1,24),new THREE.MeshStandardMaterial({color:0xd9b25a,metalness:.9,roughness:.25}));fer.position.y=.18;
+const han=new THREE.Mesh(new THREE.CylinderGeometry(.022,.034,.62,20),new THREE.MeshStandardMaterial({color:0x1B1530,roughness:.35}));han.position.y=.54;
+const tipc=new THREE.Mesh(new THREE.SphereGeometry(.022,16,12),new THREE.MeshStandardMaterial({color:0xFFD23F,roughness:.4}));tipc.position.y=.85;
+[bris,fer,han,tipc].forEach(m=>{m.castShadow=true;brush.add(m)});
+holder.add(brush);
+
+/* painting strokes */
+const img=new Image();img.src='img/tela-joy.jpg';let pat=null,ready=false;
+function rnd(s){return function(){s=(s*16807)%2147483647;return (s-1)/2147483646}}
+const strokes=[];(function(){const r=rnd(7);
+ // pass 1: big blocking strokes (diagonal)
+ for(let i=0;i<14;i++){const y0=-80+i*82,pts=[];const dir=i%2?1:-1;for(let k=0;k<=24;k++){const t=k/24;const x=dir>0?-40+t*(TW+80):TW+40-t*(TW+80);pts.push([x,y0+t*120+Math.sin(t*6+i)*18])}strokes.push({pts,w:120,a:.55})}
+ // pass 2: rows of detail strokes
+ for(let i=0;i<20;i++){const y0=18+i*50,pts=[];const dir=i%2?-1:1;for(let k=0;k<=30;k++){const t=k/30;const x=dir>0?-20+t*(TW+40):TW+20-t*(TW+40);pts.push([x,y0+Math.sin(t*9+i*1.7)*10+(r()-.5)*6])}strokes.push({pts,w:62,a:1})}
+ // pass 3: accents
+ for(let i=0;i<10;i++){const cx=r()*TW,cy=r()*TH,pts=[];for(let k=0;k<=14;k++){const t=k/14;pts.push([cx+Math.cos(t*5+i)*70*t,cy+Math.sin(t*5+i)*70*t])}strokes.push({pts,w:40,a:1})}
+})();
+const N=strokes.length;let lastP=-1,tip=[TW/2,TH/2],tipCol='#E3127F';
+function sketch(){g.fillStyle='#f6f1e8';g.fillRect(0,0,TW,TH);
+ if(ready){g.save();g.globalAlpha=.09;try{g.filter='grayscale(1) contrast(1.8)'}catch(e){}g.drawImage(img,0,0,TW,TH);g.restore()}}
+function drawStroke(s,f){const n=Math.max(2,Math.floor(s.pts.length*f));const p=s.pts.slice(0,n);g.save();g.strokeStyle=pat;g.lineCap='round';g.lineJoin='round';
+ g.globalAlpha=s.a;g.lineWidth=s.w*.78;g.beginPath();g.moveTo(...p[0]);p.forEach(q=>g.lineTo(...q));g.stroke();
+ g.globalAlpha=s.a*.9;for(let j=-4;j<=4;j++){g.lineWidth=2+((j*7+11)%5);const off=j*s.w/9;g.beginPath();p.forEach((q,k)=>{const nx=q[0],ny=q[1]+off;k?g.lineTo(nx,ny):g.moveTo(nx,ny)});g.stroke()}
+ g.restore();return p[p.length-1]}
+function paint(p){if(!ready||Math.abs(p-lastP)<.0015)return;lastP=p;sketch();const tot=p*N;let last=null;
+ for(let i=0;i<N;i++){if(tot<=i)break;last=drawStroke(strokes[i],Math.min(1,tot-i))}
+ if(p>.97){g.globalAlpha=(p-.97)/.03;g.drawImage(img,0,0,TW,TH);g.globalAlpha=1}
+ if(last){tip=last;const d=g.getImageData(Math.max(0,Math.min(TW-1,last[0]|0)),Math.max(0,Math.min(TH-1,last[1]|0)),1,1).data;bristleM.color.setRGB(d[0]/255,d[1]/255,d[2]/255).convertSRGBToLinear()}
+ tex.needsUpdate=true}
+img.onload=()=>{const c=document.createElement('canvas');c.width=TW;c.height=TH;c.getContext('2d').drawImage(img,0,0,TW,TH);pat=g.createPattern(c,'no-repeat');ready=true;lastP=-1;sketch();tex.needsUpdate=true};
+
+/* layout + loop */
+let W=0,H=0,mob=false;function size(){W=cv.clientWidth;H=cv.clientHeight;mob=W/H<.85;R.setSize(W,H,false);C.aspect=W/H;C.updateProjectionMatrix()}
+addEventListener('resize',size);size();
+let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+function prog(){const r=sec.getBoundingClientRect(),tot=r.height-innerHeight;return Math.min(1,Math.max(0,-r.top/tot))}
+let sp=0,vis=true;new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(sec);
+const look=new THREE.Vector3(),camP=new THREE.Vector3(),clock=new THREE.Clock();
+function lerp(a,b,t){return a+(b-a)*t}
+function frame(){requestAnimationFrame(frame);if(!vis)return;const t=clock.getElapsedTime();
+ const target=prog();sp+=(target-sp)*.12;const pp=Math.min(1,Math.max(0,(sp-.05)/.75));paint(pp);
+ bar.style.width=(sp*100)+'%';hint.style.opacity=sp>.03?0:.6;
+ steps.forEach((li,i)=>li.classList.toggle('on',pp>=[0,.3,.72][i]));cta.classList.toggle('on',pp>.96);
+ const e=sp*sp*(3-2*sp);
+ if(mob){camP.set(lerp(1.4,0,e)+mx*.3,lerp(2.6,2.2,e),lerp(6.6,7.4,e));look.set(0,lerp(.75,.85,e),0)}
+ else{camP.set(lerp(1.6,-.5,e)+mx*.5,lerp(2.2,1.8,e)-my*.3,lerp(4.4,4.9,e));look.set(lerp(-1.05,-1.25,e),lerp(1.55,1.45,e),0)}
+ C.position.lerp(camP,.1);C.lookAt(look);
+ // brush follows the stroke tip
+ const bx=(tip[0]/TW-.5)*CW,by=(.5-tip[1]/TH)*CH,away=pp>.97||pp<=0;
+ const tx=away?CW*.5+.25:bx,ty=away?-.1:by,tz=away?.5:ct/2+.004;
+ brush.position.x+=(tx-brush.position.x)*.25;brush.position.y+=(ty-brush.position.y)*.25;brush.position.z+=(tz-brush.position.z)*.25;
+ brush.rotation.set(.55+Math.sin(t*9)*.05,0,-.5+Math.sin(t*7)*.08);
+ R.render(S,C)}
+frame();
+})();
+</script>
+
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:2147483646;pointer-events:none;background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27300%27%20height%3D%27150%27%3E%3Ctext%20x%3D%27150%27%20y%3D%2782%27%20text-anchor%3D%27middle%27%20transform%3D%27rotate%28-22%20150%2075%29%27%20font-family%3D%27Poppins%2CArial%2Csans-serif%27%20font-size%3D%2713%27%20font-weight%3D%27600%27%20letter-spacing%3D%271.6%27%20fill%3D%27rgba%28255%2C255%2C255%2C.16%29%27%20stroke%3D%27rgba%280%2C0%2C0%2C.06%29%27%20stroke-width%3D%27.4%27%3EPR%C3%89-VISUALIZA%C3%87%C3%83O%20%C2%B7%20a.estrategista%3C/text%3E%3C/svg%3E&quot;);background-repeat:repeat"></div>
 <div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;font:600 11px/1 Poppins,system-ui,sans-serif;letter-spacing:.04em;color:#fff;background:rgba(17,17,17,.55);padding:7px 11px;border-radius:999px;pointer-events:none">Pré-visualização · a.estrategista</div>
 </body>
