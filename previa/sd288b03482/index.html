@@ -473,6 +473,7 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
 .eq-alt{margin-top:0!important}
 .eq2{max-width:900px;margin:0 auto;gap:40px!important;align-items:start}
 @media(max-width:900px){.eq2{gap:56px!important}}
+@media(max-width:900px){.meta-ph{height:54vh!important}section.meta{padding:10px 0 40px!important}.meta-tx h2{margin-top:10px!important}}
 
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
@@ -715,7 +716,7 @@ function loop(n){requestAnimationFrame(loop);var t=(n-t0)/1000,f=lastN?Math.min(
  var tgx=(cur[1]-.5)*vw,tgy=(.5-cur[2])*vh,tgs=cur[3]*vh/2;
  var ph=(mob&&inM)?document.getElementById('metaph'):null,phr=ph&&ph.getBoundingClientRect();
  if(cur[0]===3||cur[0]===5){tgx=0;tgy=0;tgs=vw/2.2;}
- else if(phr&&phr.height){tgx=0;tgs=Math.min(phr.height*.46/innerHeight*vh,vw*.42);tgy=(.5-(phr.top+phr.height/2)/innerHeight)*vh;}
+ else if(phr&&phr.height){tgx=0;tgs=Math.min(phr.height*.56/innerHeight*vh,vw*.47);tgy=(.5-(phr.top+phr.height/2)/innerHeight)*vh;}
  else{var mg=.04*vh,hx=tgs*1.05,hy=tgs*1.05;if(hx>vw/2-mg)hx=vw/2-mg;if(hy>vh/2-mg)hy=vh/2-mg;var lim=Math.min(1,(vw/2-mg)/(tgs*1.05),(vh/2-mg-.06*vh)/(tgs*1.05));if(lim<1)tgs*=lim;hx=tgs*1.05;hy=tgs*1.05;tgx=Math.max(-vw/2+mg+hx,Math.min(vw/2-mg-hx,tgx));tgy=Math.max(-vh/2+mg+hy,Math.min(vh/2-mg-hy-.06*vh,tgy));}
  var q=L(.05*sp,f);gx+=(tgx-gx)*q;gy+=(tgy-gy)*(phr&&phr.height&&Math.abs(tgy-gy)<vh*.6?L(.35,f):q);gs+=(tgs-gs)*q;op+=((t>1.6?cur[4]:0)-op)*L(.05,f);flap+=(cur[5]-flap)*L(.06,f);
  grp.position.set(gx+Math.sin(t*.7)*.05,gy+Math.sin(t*1.1)*.06,0);grp.scale.setScalar(gs);
