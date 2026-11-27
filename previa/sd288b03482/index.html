@@ -321,6 +321,11 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
 @media(max-width:900px){.proc{padding-top:64px!important;padding-bottom:64px!important}.proc .steps{grid-template-columns:1fr;gap:10px;margin-top:24px}.proc .step{padding:16px 18px!important}.proc .step .num{font-size:36px!important;min-width:44px}.proc .step h3{font-size:20px!important}.proc-cta{width:100%;justify-content:center;margin-top:22px}}
 .svcs button .sn{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:3px;min-width:0}.svcs button .sn small{font-size:12px;line-height:1.35;color:#a89a84;font-weight:400}.svcs button em{flex:none;margin-left:12px}.bkx{margin:0 0 14px;font-size:13px;line-height:1.45;color:#a89a84}
 
+/* janela de marcacao: X sempre visivel */
+.bkh{position:sticky;top:0;z-index:3;background:#141110;border-radius:inherit}
+.bkh .x{display:grid;place-items:center}
+@media(max-width:900px){#bk{height:100vh;height:100dvh}.bkp{max-height:88vh;max-height:calc(100dvh - 24px)}.bkh{padding:20px 22px 10px}.bkh h3{font-size:26px}}
+
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
 body[data-pg=trat] .hero,body[data-pg=trat] .proc,body[data-pg=trat] #trat,body[data-pg=trat] #res,body[data-pg=trat] #rev,body[data-pg=trat] #meta,body[data-pg=trat] #equipa,body[data-pg=trat] #esp{display:none!important}
