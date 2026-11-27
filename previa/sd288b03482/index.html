@@ -467,6 +467,7 @@ function loop(n){requestAnimationFrame(loop);var t=(n-t0)/1000,f=lastN?Math.min(
  var vh=2*cam.position.z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2)),vw=vh*cam.aspect;
  var tgx=(cur[1]-.5)*vw,tgy=(.5-cur[2])*vh,tgs=cur[3]*vh/2;
  if(cur[0]===3||cur[0]===5){tgx=0;tgy=0;tgs=vw/2.2;}
+ else{var mg=.04*vh,hx=tgs*1.05,hy=tgs*1.05;if(hx>vw/2-mg)hx=vw/2-mg;if(hy>vh/2-mg)hy=vh/2-mg;var lim=Math.min(1,(vw/2-mg)/(tgs*1.05),(vh/2-mg-.06*vh)/(tgs*1.05));if(lim<1)tgs*=lim;hx=tgs*1.05;hy=tgs*1.05;tgx=Math.max(-vw/2+mg+hx,Math.min(vw/2-mg-hx,tgx));tgy=Math.max(-vh/2+mg+hy,Math.min(vh/2-mg-hy-.06*vh,tgy));}
  var q=L(.05*sp,f);gx+=(tgx-gx)*q;gy+=(tgy-gy)*q;gs+=(tgs-gs)*q;op+=((t>1.6?cur[4]:0)-op)*L(.05,f);flap+=(cur[5]-flap)*L(.06,f);
  grp.position.set(gx+Math.sin(t*.7)*.05,gy+Math.sin(t*1.1)*.06,0);grp.scale.setScalar(gs);
  grp.rotation.y+=((mx*.6+Math.sin(t*.4)*.35)-grp.rotation.y)*.05;grp.rotation.x+=((my*.3-.15*flap)-grp.rotation.x)*.05;
