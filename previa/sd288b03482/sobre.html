@@ -310,6 +310,16 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
  body.mopen{overflow:hidden}
 }
 
+/* como funciona compacto */
+.proc{padding-top:90px!important;padding-bottom:90px!important}
+.proc .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.proc .step{display:flex;gap:16px;align-items:flex-start;padding:22px 22px!important;border-radius:22px}
+.proc .step .num{font-size:44px!important;line-height:1!important;flex:none;min-width:52px}
+.proc .step h3{font-size:22px!important;margin:2px 0 6px!important}
+.proc .step p{font-size:14px!important;line-height:1.5!important;margin:0!important}
+.proc-cta{display:inline-flex;margin-top:30px}
+@media(max-width:900px){.proc{padding-top:64px!important;padding-bottom:64px!important}.proc .steps{grid-template-columns:1fr;gap:10px;margin-top:24px}.proc .step{padding:16px 18px!important}.proc .step .num{font-size:36px!important;min-width:44px}.proc .step h3{font-size:20px!important}.proc-cta{width:100%;justify-content:center;margin-top:22px}}
+
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
 body[data-pg=trat] .hero,body[data-pg=trat] .proc,body[data-pg=trat] #trat,body[data-pg=trat] #res,body[data-pg=trat] #rev,body[data-pg=trat] #meta,body[data-pg=trat] #equipa,body[data-pg=trat] #esp{display:none!important}
@@ -359,10 +369,11 @@ body[data-pg=sobre] nav,body[data-pg=trat] nav{background:rgba(13,11,10,.94)!imp
   <div class="kicker rv">Como funciona</div>
   <h2 class="rv">Cada pele tem a sua <em>metamorfose</em>. A sua começa aqui.</h2>
   <div class="steps">
-   <div class="step rv"><div class="num">01</div><h3>Avaliação gratuita</h3><p>Rosto ou corpo. Conversamos sobre o que procura e avaliamos se o tratamento é indicado para si.</p></div>
-   <div class="step rv"><div class="num">02</div><h3>Um protocolo só seu</h3><p>Laser, HIFU, pressoterapia ou lipocavitação, combinados ao seu ritmo e ao seu orçamento.</p></div>
-   <div class="step rv"><div class="num">03</div><h3>Resultados que se veem</h3><p>Acompanhamento sessão a sessão, até ver no espelho a diferença que procurava.</p></div>
+   <div class="step rv"><div class="num">01</div><div><h3>Avaliação gratuita</h3><p>Percebemos o que a sua pele e o seu corpo precisam.</p></div></div>
+   <div class="step rv"><div class="num">02</div><div><h3>Um protocolo só seu</h3><p>Ao seu ritmo e ao seu orçamento.</p></div></div>
+   <div class="step rv"><div class="num">03</div><div><h3>Resultados que se veem</h3><p>Acompanhamento sessão a sessão.</p></div></div>
   </div>
+  <a class="btn b1 proc-cta rv" href="#book">Marcar avaliação gratuita →</a></div>
  </div>
 </section>
 
@@ -697,7 +708,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')close()});
 (function(){var el=document.getElementById('plist');if(!el)return;el.innerHTML=CATS.map(function(c,ci){return '<details class="pc"><summary>'+c.t+'<small>'+c.i.length+' opções</small></summary><ul>'+c.i.map(function(s){return '<li><div><b>'+s.n+'</b>'+(s.x?'<span>'+s.x+'</span>':'')+'</div><div class="r"><span class="pv">'+s.p+'</span>'+(s.pk?'<i class="pk">Pack</i>':'<button data-n="'+s.n+'">Marcar</button>')+'</div></li>'}).join('')+'</ul></details>'}).join('');
  el.querySelectorAll('button[data-n]').forEach(function(b){b.onclick=function(){window.bkOpenSvc(b.dataset.n)}})})();
 var CAT_OF=[0,1,2,2,3,4],LBL=['Ver zonas ↓','Ver zonas ↓','Ver opções ↓','Ver opções ↓','Ver opções ↓','Ver opções ↓'];document.querySelectorAll('.tc').forEach(function(c,i){var b=document.createElement('button');b.className='mk';b.textContent=LBL[i]||'Ver opções ↓';c.appendChild(b);c.style.cursor='pointer';c.addEventListener('click',function(){if(document.body.dataset.pg!=='trat'){location.href='tratamentos.html#c'+CAT_OF[i];return}var ds=document.querySelectorAll('#plist details'),d=ds[CAT_OF[i]];if(!d)return;ds.forEach(function(x){x.open=(x===d)});var y=d.getBoundingClientRect().top+scrollY-90;scrollTo({top:y,behavior:'smooth'});d.classList.remove('hl');void d.offsetWidth;d.classList.add('hl')})});
-document.querySelectorAll('.navcta,.hero .b1,.book .b1').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(null)})});
+document.querySelectorAll('.navcta,.hero .b1,.book .b1,.proc-cta').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(null)})});
 })();
 </script>
 
