@@ -459,12 +459,24 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
 @media(max-width:900px){section.meta{height:125vh!important}.mt1{top:16vh!important;height:30vh!important}.mt2{top:46vh!important}.meta-stick{padding-bottom:8vh!important}}
 @media(max-width:900px){.stela{left:0!important;right:0!important;margin:0 auto!important;top:24px!important;height:calc(100% - 24px)!important;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 99%)!important;mask-image:linear-gradient(180deg,#000 72%,transparent 99%)!important}}
 
+/* monograma acompanha a rolagem (celular) */
+.meta-ph{display:none}
+@media(max-width:900px){
+ section.meta{height:auto!important;padding:40px 0 70px}
+ .meta-stick{position:relative!important;height:auto!important;display:block!important;padding:0!important}
+ .meta-ph{display:block;height:62vh}
+ .mt1{top:0!important;height:35%!important}.mt2{top:35%!important;bottom:0!important;height:auto!important}
+}
+/* contactos: so o mapa, so no Sobre */
+.info2 .ic-btns{display:none!important}
+.info2{grid-template-columns:1fr!important;max-width:640px!important}
+
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
 body[data-pg=trat] .hero,body[data-pg=trat] .proc,body[data-pg=trat] #trat,body[data-pg=trat] #res,body[data-pg=trat] #rev,body[data-pg=trat] #seam,body[data-pg=sobre] #seam,body[data-pg=trat] #meta,body[data-pg=trat] #equipa,body[data-pg=trat] #esp{display:none!important}
 body[data-pg=sobre] .hero,body[data-pg=sobre] .proc,body[data-pg=sobre] #trat,body[data-pg=sobre] #precos,body[data-pg=sobre] #res,body[data-pg=sobre] #rev,body[data-pg=sobre] #meta{display:none!important}
 body[data-pg=trat] #precos{padding-top:150px}
-body[data-pg=trat] .book h2,body[data-pg=trat] .book .info2{display:none!important}
+body[data-pg=trat] .book h2,body[data-pg=trat] .book .info2,body[data-pg=home] .book .info2{display:none!important}
 body[data-pg=trat] .book{padding-top:40px!important;padding-bottom:60px!important}
 body[data-pg=sobre] #equipa{padding-top:150px}
 @media(max-width:900px){body[data-pg=trat] #precos,body[data-pg=sobre] #equipa{padding-top:120px}}
@@ -493,10 +505,8 @@ body[data-pg=sobre] nav,body[data-pg=trat] nav{background:rgba(13,11,10,.94)!imp
   <div class="ember" id="ember"></div>
   <div class="card c1"><div class="g"><span class="n">5,0</span><div><span class="st">★★★★★</span><br>221 avaliações no Google</div></div></div>
   <div class="card c2">Novos clientes · laser ilimitado<br><span class="old">50 €</span>&nbsp; <span class="new">39,90 € <small>até 31/12</small></span></div>
-  <div class="card c3"><b>Avaliação gratuita</b>rosto ou corpo, antes de começar</div>
  </div>
  <div class="hcopy">
-  <div class="kicker fade" style="animation-delay:.2s">Centro de estética · Évora</div>
   <h1><span class="l"><span>Deixe a sua pele</span></span><span class="l"><span><em class="gold">falar por si.</em></span></span></h1>
   <p class="lead fade" style="animation-delay:.7s">Depilação a laser, tratamentos de rosto e corpo e massagens. Comece com uma <b>avaliação gratuita</b> e um plano feito só para si.</p>
   <div class="ctas fade" style="animation-delay:.9s"><a class="btn b1" href="#book">Marcar a minha sessão →</a><a class="btn b2" href="https://wa.me/351964670263?text=Ol%C3%A1!%20Vim%20do%20site%20%F0%9F%98%8A" target="_blank" rel="noopener"><i></i>WhatsApp 964 670 263</a></div>
@@ -563,7 +573,7 @@ body[data-pg=sobre] nav,body[data-pg=trat] nav{background:rgba(13,11,10,.94)!imp
  </div>
 </section>
 <section class="meta" id="meta">
- <div class="meta-stick"><div class="meta-tx"><div class="kicker">Stela Cristina</div><h2>Da <em class="gold">metamorfose</em> nasce a sua melhor versão.</h2><p>Cada tratamento é uma pequena transformação, feita com tempo e cuidado.</p></div></div>
+ <div class="meta-stick"><div class="meta-ph" id="metaph"></div><div class="meta-tx"><div class="kicker">Stela Cristina</div><h2>Da <em class="gold">metamorfose</em> nasce a sua melhor versão.</h2><p>Cada tratamento é uma pequena transformação, feita com tempo e cuidado.</p></div></div>
  <div class="mt mt1" data-shape="7"></div><div class="mt mt2" data-shape="8"></div>
 </section>
 
@@ -700,9 +710,11 @@ var lastN=0;function L(k,f){return 1-Math.pow(1-k,f)}
 function loop(n){requestAnimationFrame(loop);var t=(n-t0)/1000,f=lastN?Math.min(6,(n-lastN)/16.67):1;lastN=n;cur=pick();var inM=cur===CF[7]||cur===CF[8],sp=inM?2.2:1.4;
  var vh=2*cam.position.z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2)),vw=vh*cam.aspect;
  var tgx=(cur[1]-.5)*vw,tgy=(.5-cur[2])*vh,tgs=cur[3]*vh/2;
+ var ph=(mob&&inM)?document.getElementById('metaph'):null,phr=ph&&ph.getBoundingClientRect();
  if(cur[0]===3||cur[0]===5){tgx=0;tgy=0;tgs=vw/2.2;}
+ else if(phr&&phr.height){tgx=0;tgs=Math.min(phr.height*.46/innerHeight*vh,vw*.42);tgy=(.5-(phr.top+phr.height/2)/innerHeight)*vh;}
  else{var mg=.04*vh,hx=tgs*1.05,hy=tgs*1.05;if(hx>vw/2-mg)hx=vw/2-mg;if(hy>vh/2-mg)hy=vh/2-mg;var lim=Math.min(1,(vw/2-mg)/(tgs*1.05),(vh/2-mg-.06*vh)/(tgs*1.05));if(lim<1)tgs*=lim;hx=tgs*1.05;hy=tgs*1.05;tgx=Math.max(-vw/2+mg+hx,Math.min(vw/2-mg-hx,tgx));tgy=Math.max(-vh/2+mg+hy,Math.min(vh/2-mg-hy-.06*vh,tgy));}
- var q=L(.05*sp,f);gx+=(tgx-gx)*q;gy+=(tgy-gy)*q;gs+=(tgs-gs)*q;op+=((t>1.6?cur[4]:0)-op)*L(.05,f);flap+=(cur[5]-flap)*L(.06,f);
+ var q=L(.05*sp,f);gx+=(tgx-gx)*q;gy+=(tgy-gy)*(phr&&phr.height&&Math.abs(tgy-gy)<vh*.6?L(.35,f):q);gs+=(tgs-gs)*q;op+=((t>1.6?cur[4]:0)-op)*L(.05,f);flap+=(cur[5]-flap)*L(.06,f);
  grp.position.set(gx+Math.sin(t*.7)*.05,gy+Math.sin(t*1.1)*.06,0);grp.scale.setScalar(gs);
  grp.rotation.y+=((mx*.6+Math.sin(t*.4)*.35)-grp.rotation.y)*.05;grp.rotation.x+=((my*.3-.15*flap)-grp.rotation.x)*.05;
  mat.opacity=op;var bs=(mob?.011:.016)*(inM?(mob?1.35:1.2):1);mat.size+=(bs-mat.size)*L(.06,f);var li=1;tint=1;var bl=inM?THREE.AdditiveBlending:THREE.NormalBlending;if(mat.blending!==bl){mat.blending=bl;mat.needsUpdate=true;}mat.color.setRGB(1,.9,.66);
