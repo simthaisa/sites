@@ -119,7 +119,12 @@ body.open .drawer{transform:none}
 .it span{font-size:14px;opacity:.7}
 .empty{opacity:.6}
 .total{display:flex;justify-content:space-between;font-weight:700;font-size:18px;border-top:1px solid #eee;padding-top:16px;margin-bottom:14px}
-.checkout{width:100%;justify-content:center;background:var(--ink);color:#fff}
+.ml{display:block;font-weight:700;font-size:14px;margin:18px 0 8px}
+#msg{width:100%;border:1.5px solid #e6dccb;border-radius:16px;padding:14px;font:15px/1.5 "DM Sans";color:var(--ink);resize:vertical;margin-bottom:4px}
+#msg:focus{outline:none;border-color:var(--pink)}
+.send{width:100%;justify-content:center;margin-top:10px;text-decoration:none}
+.send.wa{background:#1fa855;color:#fff}.send.ig{background:var(--ink);color:#fff}
+.drawer #bi{margin-top:14px}
 .secure{text-align:center;font-size:13px;opacity:.6;margin-top:10px}
 .toast{position:fixed;left:50%;bottom:28px;translate:-50% 140px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:70;transition:translate .4s cubic-bezier(.2,.8,.2,1)}
 .toast.show{translate:-50% 0}
@@ -204,8 +209,7 @@ body.open .drawer{transform:none}
 <section class="shop" id="shop">
   <div class="shop-head">
     <h2>The <em>shop</em></h2>
-    <p>Pick a piece, add it to your bag and check out right here. No marketplace, no detours: straight from Alyne’s studio to your home.</p>
-    <button class="bag-btn" onclick="openBag()" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Bag <span class="count">0</span></button>
+    <p>Found the one? Tap Buy and your message to Alyne is ready, with the piece and the price. She replies with shipping and payment, straight from her studio to your home.</p>
   </div>
   <div class="chips" id="chips">
     <button class="chip on" data-f="all">All</button>
@@ -224,14 +228,16 @@ body.open .drawer{transform:none}
 </main>
 
 <div class="veil" onclick="closeBag()"></div>
-<aside class="drawer" aria-label="Your bag">
-  <h4>Your bag <button class="x" onclick="closeBag()" aria-label="Close">×</button></h4>
-  <div class="items" id="items"><p class="empty">Your bag is empty.</p></div>
-  <div class="total"><span>Subtotal</span><span id="sub">$0</span></div>
-  <button class="btn checkout">Checkout securely</button>
-  <p class="secure">Card · Apple Pay · Google Pay</p>
+<aside class="drawer" aria-label="Buy">
+  <h4><span id="bt">Buy this piece</span> <button class="x" onclick="closeBag()" aria-label="Close">×</button></h4>
+  <div class="it" id="bi"></div>
+  <label class="ml" for="msg">Your message to Alyne</label>
+  <textarea id="msg" rows="7"></textarea>
+  <a class="btn send wa" id="wa" target="_blank" rel="noopener">Send on WhatsApp</a>
+  <a class="btn send ig" id="ig" target="_blank" rel="noopener" href="https://ig.me/m/byalynefavoretti">Send on Instagram</a>
+  <p class="secure">On Instagram your message is copied: just paste it.</p>
 </aside>
-<div class="toast" id="toast">Added to your bag ✓</div>
+<div class="toast" id="toast">Message copied ✓</div>
 
 <script>
 const P=[
@@ -246,14 +252,23 @@ const P=[
  {n:"“Joy” Butterfly · Original 5x7",p:28,i:"borboleta.jpg",c:"art",b:"One of a kind"}
 ];
 const g=document.getElementById('grid');
-g.innerHTML=P.map((x,k)=>`<article class="card" data-c="${x.c}"><div class="ph"><img src="img/${x.i}" alt="${x.n}" loading="lazy"><span class="badge ${x.b=='Custom'?'c':''}">${x.b}</span></div><div class="info"><h3>${x.n}</h3><div class="row"><span class="price">$${x.p}</span><button class="add" data-k="${k}">Add to bag</button></div></div></article>`).join('');
+g.innerHTML=P.map((x,k)=>`<article class="card" data-c="${x.c}"><div class="ph"><img src="img/${x.i}" alt="${x.n}" loading="lazy"><span class="badge ${x.b=='Custom'?'c':''}">${x.b}</span></div><div class="info"><h3>${x.n}</h3><div class="row"><span class="price">$${x.p}</span><button class="add" data-k="${k}">Buy</button></div></div></article>`).join('');
 const io=new IntersectionObserver(es=>es.forEach((e,j)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),j*80);io.unobserve(e.target)}}),{threshold:.15});
 document.querySelectorAll('.card').forEach(c=>io.observe(c));
 document.getElementById('chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c==b));const f=b.dataset.f;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',f!='all'&&!c.dataset.c.includes(f)))};
-const bag=[];const cnts=()=>document.querySelectorAll(".count");
-g.onclick=e=>{const b=e.target.closest('.add');if(!b)return;bag.push(P[b.dataset.k]);render();b.textContent='Added ✓';b.classList.add('done');setTimeout(()=>{b.textContent='Add to bag';b.classList.remove('done')},1600);cnts().forEach(c=>{c.classList.add("pop");setTimeout(()=>c.classList.remove("pop"),300)});const t=document.getElementById('toast');t.classList.add('show');clearTimeout(window._t);window._t=setTimeout(()=>t.classList.remove('show'),1800)};
-function render(){cnts().forEach(c=>c.textContent=bag.length);document.getElementById('items').innerHTML=bag.length?bag.map(x=>`<div class="it"><img src="img/${x.i}" alt=""><div><b>${x.n}</b><span>$${x.p}</span></div></div>`).join(''):'<p class="empty">Your bag is empty.</p>';document.getElementById('sub').textContent='$'+bag.reduce((s,x)=>s+x.p,0)}
-function openBag(){document.body.classList.add('open')}
+const WA=''; /* número de WhatsApp da Alyne, só dígitos com o 1 */
+const msgEl=document.getElementById('msg');
+function txt(x){if(!x)return "Hi Alyne! I found your website and I'd love to talk about a piece. Could you help me?";
+ let t=`Hi Alyne! I'd like to buy the ${x.n} ($${x.p}) from your website.`;
+ if(x.b=='Custom')t+=`\n\nI'd love to personalize it with: `;
+ return t+`\n\nCould you tell me about shipping and payment?`}
+function upd(){const v=encodeURIComponent(msgEl.value);document.getElementById('wa').href=(WA?`https://wa.me/${WA}?text=`:'https://wa.me/?text=')+v}
+msgEl.oninput=upd;
+function openBuy(k){const x=P[k];document.getElementById('bt').textContent=x?'Buy this piece':'Message Alyne';
+ const bi=document.getElementById('bi');bi.style.display=x?'flex':'none';if(x)bi.innerHTML=`<img src="img/${x.i}" alt=""><div><b>${x.n}</b><span>$${x.p}</span></div>`;
+ msgEl.value=txt(x);upd();document.body.classList.add('open')}
+g.onclick=e=>{const b=e.target.closest('.add');if(b)openBuy(+b.dataset.k)};
+document.getElementById('ig').onclick=()=>{try{navigator.clipboard.writeText(msgEl.value)}catch(e){}const t=document.getElementById('toast');t.classList.add('show');clearTimeout(window._t);window._t=setTimeout(()=>t.classList.remove('show'),1800)};
 function closeBag(){document.body.classList.remove('open')}
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
