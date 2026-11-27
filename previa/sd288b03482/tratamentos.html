@@ -356,6 +356,21 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
 .photos .p2{z-index:3}
 @media(max-width:900px){.photos{height:520px!important}.photos .p3{width:50%;height:28%}}
 
+/* barra fixa no celular */
+.tabbar{display:none}
+@media(max-width:900px){
+ .tabbar{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;justify-content:stretch;position:fixed;top:auto!important;height:auto;transition:none;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:58;padding:8px 6px 7px;border-radius:22px;background:rgba(18,15,13,.96);border:1px solid rgba(201,164,106,.28);box-shadow:0 14px 34px -10px rgba(0,0,0,.6)}
+ .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;color:#a89a84;text-decoration:none;font:500 10.5px Jost,sans-serif;letter-spacing:.02em}
+ .tabbar a svg{width:22px;height:22px}
+ .tabbar a.on{color:#E7CC97}
+ .tabbar .tb-cta{color:#1a1208;margin-top:-22px}
+ .tabbar .tb-cta svg{width:52px;height:52px;padding:14px;border-radius:50%;background:linear-gradient(140deg,#b08848,#ecd29d);box-shadow:0 8px 20px -6px rgba(201,164,106,.7);color:#1a1208}
+ .tabbar .tb-cta span{color:#E7CC97;font-weight:600}
+ body{padding-bottom:96px}
+ body.mopen .tabbar,#bk.on~.tabbar{display:none}
+ .pill{bottom:100px!important}
+}
+
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
 body[data-pg=trat] .hero,body[data-pg=trat] .proc,body[data-pg=trat] #trat,body[data-pg=trat] #res,body[data-pg=trat] #rev,body[data-pg=trat] #seam,body[data-pg=sobre] #seam,body[data-pg=trat] #meta,body[data-pg=trat] #equipa,body[data-pg=trat] #esp{display:none!important}
@@ -795,6 +810,14 @@ b.addEventListener('click',function(){set(!document.body.classList.contains('mop
 m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
 m.querySelector('.mcta').addEventListener('click',function(e){e.preventDefault();set(false);var c=document.querySelector('.navcta');c&&c.click()});})();
 </script>
+<nav class="tabbar" aria-label="Menu">
+ <a href="index.html" data-p="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11l8-7 8 7v9h-5v-6h-6v6H4z"/></svg><span>Início</span></a>
+ <a href="tratamentos.html" data-p="trat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5h14M5 12h14M5 19h9"/></svg><span>Preços</span></a>
+ <a class="tb-cta" href="#book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><span>Marcar</span></a>
+ <a href="sobre.html" data-p="sobre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Sobre</span></a>
+ <a href="https://wa.me/351964670263" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12a8 8 0 0 1-11.7 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"/></svg><span>WhatsApp</span></a>
+</nav>
+<script>(function(){var pg=document.body.dataset.pg;document.querySelectorAll(".tabbar a[data-p]").forEach(function(a){a.classList.toggle("on",a.dataset.p===pg)});var c=document.querySelector(".tb-cta");c&&c.addEventListener("click",function(e){e.preventDefault();var n=document.querySelector(".navcta");n&&n.click()})})();</script>
 <script>
 (function(){var pg=document.body.dataset.pg;document.querySelectorAll('.links a').forEach(function(a){a.classList.toggle('on',a.dataset.p===pg)});
 if(pg==='trat'){var h=location.hash.match(/^#c(\d+)/);if(h){var go=function(){var ds=document.querySelectorAll('#plist details'),d=ds[+h[1]];if(!d)return setTimeout(go,100);ds.forEach(function(x){x.open=(x===d)});setTimeout(function(){scrollTo({top:d.getBoundingClientRect().top+scrollY-90,behavior:'smooth'});d.classList.add('hl')},150)};go()}}})();
