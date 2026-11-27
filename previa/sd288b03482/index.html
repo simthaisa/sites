@@ -387,7 +387,7 @@ var cnt=document.getElementById('cnt'),done=0;new IntersectionObserver(function(
 /* horizontal */
 var trat=document.getElementById('trat'),rail=document.getElementById('rail'),prog=document.getElementById('prog');
 function hs(){if(mob)return;var r=trat.getBoundingClientRect(),tot=trat.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/tot)),mx=rail.scrollWidth-innerWidth+80;rail.style.transform='translateX('+(-p*mx)+'px)';prog.style.width=(p*100)+'%';}
-addEventListener('scroll',hs,{passive:true});hs();
+function hsz(){if(mob){trat.style.height='';return}var mx=rail.scrollWidth-innerWidth+80;trat.style.height=(mx<120?innerHeight:innerHeight+mx*1.15)+'px';hs()}addEventListener('resize',hsz);addEventListener('scroll',hs,{passive:true});hsz();
 /* antes/depois */
 var gal=document.getElementById('gal'),items=[].slice.call(gal.querySelectorAll('.ba')),gi=0;
 items.forEach(function(ba){if(ba.classList.contains('st'))return;var tp=ba.querySelector('.top'),bar=ba.querySelector('.bar'),kn=ba.querySelector('.knob'),drag=false;
