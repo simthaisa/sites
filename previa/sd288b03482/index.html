@@ -286,7 +286,7 @@ details.pc.hl{animation:pchl 1.8s ease}@keyframes pchl{0%,40%{box-shadow:0 0 0 3
  <div class="pin">
   <div class="wrap head">
    <div><div class="kicker">Os mais procurados</div><h2 style="margin-top:16px">Tudo o que a sua pele <em class="gold">pede</em>.</h2></div>
-   <p>Toque num tratamento para ver todas as opções e preços, e marcar.</p>
+   <p>Toque num tratamento para ver todas as opções e marcar.</p>
   </div>
   <div class="rail" id="rail">
    <article class="tc feat"><div class="glow"></div><span class="tag">Novos clientes</span><svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 54 46 18"/><path d="M42 14l8 8-6 6-8-8z"/><circle cx="12" cy="52" r="3" fill="#FF3B2F" stroke="none"/></svg><h3>Depilação a laser</h3><p>Zonas ilimitadas, para mulher e homem. Pele lisa por muito mais tempo.</p><div class="pr">Mulher <b>39,90 €</b> · Homem <b>49,90 €</b></div></article>
@@ -610,7 +610,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')close()});
 
 (function(){var el=document.getElementById('plist');if(!el)return;el.innerHTML=CATS.map(function(c,ci){return '<details class="pc"><summary>'+c.t+'<small>'+c.i.length+' opções</small></summary><ul>'+c.i.map(function(s){return '<li><div><b>'+s.n+'</b>'+(s.x?'<span>'+s.x+'</span>':'')+'</div><div class="r"><span class="pv">'+s.p+'</span>'+(s.pk?'<i class="pk">Pack</i>':'<button data-n="'+s.n+'">Marcar</button>')+'</div></li>'}).join('')+'</ul></details>'}).join('');
  el.querySelectorAll('button[data-n]').forEach(function(b){b.onclick=function(){window.bkOpenSvc(b.dataset.n)}})})();
-var CAT_OF=[0,1,2,2,3,4];document.querySelectorAll('.tc').forEach(function(c,i){var b=document.createElement('button');b.className='mk';b.textContent='Ver preços ↓';c.appendChild(b);c.style.cursor='pointer';c.addEventListener('click',function(){var ds=document.querySelectorAll('#plist details'),d=ds[CAT_OF[i]];if(!d)return;ds.forEach(function(x){x.open=(x===d)});var y=d.getBoundingClientRect().top+scrollY-90;scrollTo({top:y,behavior:'smooth'});d.classList.remove('hl');void d.offsetWidth;d.classList.add('hl')})});
+var CAT_OF=[0,1,2,2,3,4],LBL=['Ver zonas ↓','Ver zonas ↓','Ver opções ↓','Ver opções ↓','Ver opções ↓','Ver opções ↓'];document.querySelectorAll('.tc').forEach(function(c,i){var b=document.createElement('button');b.className='mk';b.textContent=LBL[i]||'Ver opções ↓';c.appendChild(b);c.style.cursor='pointer';c.addEventListener('click',function(){var ds=document.querySelectorAll('#plist details'),d=ds[CAT_OF[i]];if(!d)return;ds.forEach(function(x){x.open=(x===d)});var y=d.getBoundingClientRect().top+scrollY-90;scrollTo({top:y,behavior:'smooth'});d.classList.remove('hl');void d.offsetWidth;d.classList.add('hl')})});
 document.querySelectorAll('.navcta,.hero .b1,.book .b1').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();open(null)})});
 })();
 </script>
