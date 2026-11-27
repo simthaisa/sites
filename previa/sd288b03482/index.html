@@ -319,6 +319,7 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
 .proc .step p{font-size:14px!important;line-height:1.5!important;margin:0!important}
 .proc-cta{display:inline-flex;margin-top:30px}
 @media(max-width:900px){.proc{padding-top:64px!important;padding-bottom:64px!important}.proc .steps{grid-template-columns:1fr;gap:10px;margin-top:24px}.proc .step{padding:16px 18px!important}.proc .step .num{font-size:36px!important;min-width:44px}.proc .step h3{font-size:20px!important}.proc-cta{width:100%;justify-content:center;margin-top:22px}}
+.svcs button .sn{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:3px;min-width:0}.svcs button .sn small{font-size:12px;line-height:1.35;color:#a89a84;font-weight:400}.svcs button em{flex:none;margin-left:12px}.bkx{margin:-14px 28px 6px;font-size:13px;line-height:1.45;color:#a89a84}
 
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
@@ -677,12 +678,12 @@ function open(i){st={svc:null,day:null,slot:null,flt:i==null?null:CARD[i],fromLi
 window.bkOpenSvc=function(n){var s=SVC.find(function(x){return x.n==n});st={svc:s,day:null,slot:null};M.classList.add('on');document.body.style.overflow='hidden';pick()};
 function close(){M.classList.remove('on');document.body.style.overflow=''}
 function head(t,s){return '<div class="bkh"><div><small>'+s+'</small><h3>'+t+'</h3></div><button class="x" aria-label="Fechar">✕</button></div>'}
-function chooseSvc(){var html='';CATS.forEach(function(c){var it=c.i.filter(function(s){return !s.pk&&(!st.flt||st.flt(s))});if(!it.length)return;html+='<div class="lbl">'+c.t+'</div><div class="svcs">'+it.map(function(s){return '<button data-n="'+s.n+'">'+s.n+'<em>'+s.p+'</em></button>'}).join('')+'</div>'});
+function chooseSvc(){var html='';CATS.forEach(function(c){var it=c.i.filter(function(s){return !s.pk&&(!st.flt||st.flt(s))});if(!it.length)return;html+='<div class="lbl">'+c.t+'</div><div class="svcs">'+it.map(function(s){return '<button data-n="'+s.n+'"><span class="sn">'+s.n+(s.x?'<small>'+s.x+'</small>':'')+'</span><em>'+s.p+'</em></button>'}).join('')+'</div>'});
  C.innerHTML=head('Que tratamento quer marcar?','Marcação online')+'<div class="bkb">'+html+'</div>';
  C.querySelectorAll('.svcs button').forEach(function(b){b.onclick=function(){st.svc=SVC.find(function(x){return x.n==b.dataset.n});pick()}})}
 function pick(){var ds=days();if(!st.day){st.day=ds.find(function(d){return d.getDay()!==0&&slots(st.svc,d).length})}
  var sl=st.day?slots(st.svc,st.day):[];
- C.innerHTML=head(st.svc.n,'Escolha o dia e a hora')+'<div class="bkb"><div class="meta"><span><b>'+st.svc.d+' min</b></span><span>'+st.svc.p+'</span></div>'+
+ C.innerHTML=head(st.svc.n,'Escolha o dia e a hora')+(st.svc.x?'<p class="bkx">'+st.svc.x+'</p>':'')+'<div class="bkb"><div class="meta"><span><b>'+st.svc.d+' min</b></span><span>'+st.svc.p+'</span></div>'+
  '<div class="lbl">Dia</div><div class="days">'+ds.map(function(d,i){var closed=d.getDay()===0;return '<button class="day'+(st.day&&key(d)===key(st.day)?' sel':'')+'" data-i="'+i+'"'+(closed?' disabled':'')+'><small>'+DOW[d.getDay()]+'</small><b>'+d.getDate()+'</b><small>'+MON[d.getMonth()]+'</small></button>'}).join('')+'</div>'+
  '<div class="lbl">Horários livres</div>'+(sl.length?'<div class="slots">'+sl.map(function(s){return '<button class="slot'+(st.slot&&st.slot.t===s.t?' sel':'')+'" data-t="'+s.t+'">'+hm(s.t)+'</button>'}).join('')+'</div>':'<p class="empty">Sem horários livres neste dia. Escolha outro dia.</p>')+
  '<button class="go" '+(st.slot?'':'disabled')+'>Continuar</button>'+(st.fromList?'<button class="back">← Outro tratamento</button>':'')+'</div>';
