@@ -337,6 +337,15 @@ section.meta{display:block;width:100%;max-width:none;margin:0;position:relative;
 .tc h3,.tc p,.tc .mk{position:relative;z-index:1}
 .rlink{display:inline-flex;gap:8px;align-items:center;text-decoration:none;border-bottom:1px solid rgba(201,164,106,.45);padding-bottom:4px}.rlink span{font-size:14px;letter-spacing:0}.rlink:hover{border-color:#E7CC97}
 
+/* confirmacao */
+.bkb.ok .go.wa{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:18px;background:#25D366;color:#06210f;text-decoration:none;font-weight:600}
+.bkb.ok .go.wa i{width:9px;height:9px;border-radius:50%;background:#06210f}
+.bkb.ok .cal{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bkb.ok .cal span{grid-column:1/-1;font:500 11px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#C9A46A;text-align:center;margin-top:4px}
+.bkb.ok .cal a{display:block;text-align:center;padding:13px 10px;border-radius:99px;border:1px solid rgba(201,164,106,.45);color:#F4ECE2;text-decoration:none;font-size:14px}
+.bkb.ok .cal a:hover{border-color:#E7CC97}
+.bkb.ok .fechar{margin-top:16px}
+
 /* paginas */
 body[data-pg=home] #precos,body[data-pg=home] #equipa,body[data-pg=home] #esp{display:none!important}
 body[data-pg=trat] .hero,body[data-pg=trat] .proc,body[data-pg=trat] #trat,body[data-pg=trat] #res,body[data-pg=trat] #rev,body[data-pg=trat] #meta,body[data-pg=trat] #equipa,body[data-pg=trat] #esp{display:none!important}
@@ -714,7 +723,19 @@ function form(){C.innerHTML=head('Quase pronto','Os seus dados')+'<div class="bk
  C.querySelector('.back').onclick=pick;
  go.onclick=function(){var av=st.slot.av,cnt=function(s){return seed(st.day).filter(function(x){return x.st===s}).length};var who=av.slice().sort(function(a,b){return cnt(a)-cnt(b)})[0];
   seed(st.day).push({st:who,a:st.slot.t,b:st.slot.t+st.svc.d,svc:st.svc.n,c:fn.value.trim(),nw:1});done(who,fn.value.trim())};fn.focus()}
-function done(who,name){C.innerHTML=head('Marcação confirmada','Obrigada, '+name.split(' ')[0])+'<div class="bkb ok"><div class="ic">✓</div><h4>Até breve!</h4><p>Vai receber a confirmação por e-mail. Se precisar de alterar, é só enviar uma mensagem.</p><div class="card2"><b>'+st.svc.n+'</b><br>'+when()+'<br>Com a '+STAFF[who]+' · R. Armando Antunes da Silva, 13 · Évora</div><button class="go">Fechar</button></div>';C.querySelector('.go').onclick=close}
+function done(who,name){
+ var d=new Date(st.day);d.setHours(0,0,0,0);var t0=st.slot.t,t1=t0+st.svc.d,pad=function(n){return(n<10?'0':'')+n};
+ var ymd=d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate()),hms=function(m){return pad(Math.floor(m/60))+pad(m%60)+'00'};
+ var loc='R. Armando Antunes da Silva, 13, 7005-145 Évora, Portugal',ttl=st.svc.n+' · Stela Cristina';
+ var msg='Olá! Acabei de marcar pelo site 😊\n\n• Tratamento: '+st.svc.n+' ('+st.svc.p+')\n• Dia: '+when()+'\n• Com: '+STAFF[who]+'\n• Nome: '+name+'\n\nPodem confirmar, por favor?';
+ var wa='https://wa.me/351964670263?text='+encodeURIComponent(msg);
+ var gc='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(ttl)+'&dates='+ymd+'T'+hms(t0)+'/'+ymd+'T'+hms(t1)+'&ctz=Europe/Lisbon&location='+encodeURIComponent(loc)+'&details='+encodeURIComponent('Marcação feita no site. Para alterar: WhatsApp +351 964 670 263');
+ var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Stela Cristina//PT','BEGIN:VEVENT','UID:'+Date.now()+'@stelacristina','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z','DTSTART;TZID=Europe/Lisbon:'+ymd+'T'+hms(t0),'DTEND;TZID=Europe/Lisbon:'+ymd+'T'+hms(t1),'SUMMARY:'+ttl,'LOCATION:'+loc.replace(/,/g,'\,'),'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:Lembrete','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+ var icsUrl='data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);
+ C.innerHTML=head('Marcação feita','Obrigada, '+name.split(' ')[0])+'<div class="bkb ok"><div class="ic">✓</div><h4>Até breve!</h4><div class="card2"><b>'+st.svc.n+'</b> · '+st.svc.p+'<br>'+when()+'<br>Com a '+STAFF[who]+' · R. Armando Antunes da Silva, 13 · Évora</div>'+
+ '<a class="go wa" href="'+wa+'" target="_blank" rel="noopener">Confirmar a minha sessão pelo WhatsApp</a>'+
+ '<div class="cal"><span>Adicionar à minha agenda</span><a href="'+gc+'" target="_blank" rel="noopener">Google Agenda</a><a href="'+icsUrl+'" download="marcacao-stela-cristina.ics">iPhone / Outlook</a></div>'+
+ '<button class="back fechar">Fechar</button></div>';C.querySelector('.fechar').onclick=close}
 function team(){if(!st.day){var d=new Date();d.setHours(12);st.day=d}
  var l=seed(st.day).slice().sort(function(a,b){return a.a-b.a});function col(s){var x=l.filter(function(b){return b.st===s});return '<div><h5>'+STAFF[s]+'</h5>'+(x.length?x.map(function(b){return '<p'+(b.nw?' class="new"':'')+'>'+hm(b.a)+'–'+hm(b.b)+' · '+b.svc+(b.nw?' (nova)':'')+'</p>'}).join(''):'<p>Sem marcações</p>')+'</div>'}
  C.innerHTML=head('Agenda da equipa','Como a Stela vê · '+st.day.getDate()+' de '+MON[st.day.getMonth()])+'<div class="bkb"><div class="team">'+col('s')+col('l')+'</div><p class="empty" style="margin-top:12px">Cada tratamento só mostra horários em que alguém que o faz está livre. Quem está mais livre no dia recebe a marcação.</p><button class="go">Fazer uma marcação</button></div>';C.querySelector('.go').onclick=function(){st.svc?pick():chooseSvc()}}
